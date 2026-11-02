@@ -1,0 +1,103 @@
+{
+  "name": "dsh-rfq-compare",
+  "version": "0.1.0-alpha.1",
+  "description": "Ingest supplier quotes, compare them per material, flag below-cost / over-budget / expired quotes and export a comparison CSV; amounts stay in integer cents.",
+  "type": "module",
+  "main": "./lib/plugin/index.js",
+  "types": "./lib/plugin/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/plugin/index.d.ts",
+      "default": "./lib/plugin/index.js"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "README-zh.md",
+    "README-es.md",
+    "README-pt.md",
+    "README-hi.md",
+    "TROUBLESHOOTING.md",
+    "LICENSE",
+    "NOTICE",
+    "THIRD-PARTY-NOTICES",
+    "samples",
+    "docs/assets",
+    "screenshots.json"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "demo": {
+      "sample": "samples/quickstart/input/quotes.csv",
+      "prompt": "把这三家供应商的报价按物料比一比，标出低于成本线、超预算和有效期已过的，再导出一张比价表。",
+      "expect": "samples/quickstart/expected/result.json",
+      "screenshot": "docs/assets/quickstart.png",
+      "reads": [
+        "用户指定的报价 CSV（样例：samples/quickstart/input/quotes.csv）",
+        "成本线与预算假设（样例：samples/quickstart/input/assumptions.json）"
+      ],
+      "writes": [
+        "$DSH_HOME/dsh-rfq-compare/"
+      ],
+      "network": false,
+      "external": []
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.3 <0.4.0",
+    "node": ">=24.9.0 <25"
+  },
+  "packageManager": "pnpm@11.28.5",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "node scripts/lint.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --test test/*.test.mjs",
+    "gate": "node scripts/gate.mjs",
+    "make:sample": "node scripts/make-sample.mjs",
+    "quickstart": "node samples/quickstart/run.mjs --check",
+    "prepublishOnly": "npm run build && node scripts/lint.mjs && node scripts/gate.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "rfq",
+    "quote",
+    "procurement",
+    "compare",
+    "csv",
+    "perrylink"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PerryLink/dsh-rfq-compare.git"
+  },
+  "homepage": "https://perrylink.github.io/dsh-plugins/",
+  "bugs": {
+    "url": "https://github.com/PerryLink/dsh-rfq-compare/issues"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.5 <5.0.0",
+    "@deepseek-ai/dsh-tools": ">=0.2.1-rc.3 <0.4.0"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.5",
+    "@deepseek-ai/dsh-tools": "0.2.1-rc.3",
+    "@types/node": "^24.0.0",
+    "typescript": "7.0.2"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  }
+}

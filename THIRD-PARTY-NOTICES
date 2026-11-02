@@ -1,0 +1,12 @@
+Third-party notices for dsh-rfq-compare
+
+Runtime:
+- None. The shipped lib/ has no third-party runtime dependency; the plugin uses
+  the host-provided @deepseek-ai/dsh-tools and @deepseek-ai/cordis contracts.
+
+Development only (not shipped in lib/):
+- typescript 7.0.2 (Apache-2.0) — build tool.
+- @types/node (MIT) — type declarations.
+- @deepseek-ai/cordis and @deepseek-ai/dsh-tools (MIT) — host plugin/tool contracts.
+
+No customer data is included. All samples and fixtures are synthetic.

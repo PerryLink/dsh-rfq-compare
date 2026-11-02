@@ -1,0 +1,20 @@
+$ node samples/quickstart/run.mjs --check
+dsh-rfq-compare quickstart - synthetic quotes, 3 suppliers x 4 materials (no customer data)
+ingested 12 quote(s), 0 updated, 12 total; as_of 2026-11-02
+FX placeholder: CNY 1.00 | USD 7.20 | EUR 7.80 -> CNY (static, not live; override with fx_rates)
+MAT-1001  lowest DEMO-SUP-B 172.00 USD -> 1238.40 CNY  lead 10-21 d
+           second DEMO-SUP-A 1250.00 CNY  spread 11.60 CNY (94 bp)
+           anomalies: below-cost 1, over-budget no, expired 0
+MAT-1002  lowest DEMO-SUP-B 84.50 CNY -> 84.50 CNY  lead 18-30 d
+           second DEMO-SUP-A 86.00 CNY  spread 1.50 CNY (178 bp)
+           anomalies: below-cost 0, over-budget no, expired 1
+MAT-1003  lowest DEMO-SUP-C 2415.00 CNY -> 2415.00 CNY  lead 40-60 d
+           second DEMO-SUP-A 2480.00 CNY  spread 65.00 CNY (269 bp)
+           anomalies: below-cost 1, over-budget yes, expired 0
+MAT-1004  lowest DEMO-SUP-A 330.00 CNY -> 330.00 CNY  lead 9-20 d
+           second DEMO-SUP-C 42.80 EUR  spread 3.84 CNY (116 bp)
+           anomalies: below-cost 0, over-budget yes, expired 1
+summary: 4 material(s), 12 quote(s), 3 supplier(s); below-cost 2 / over-budget 2 / expired 2
+CSV exports/rfq-compare.csv: 4 rows, 895 bytes, sha256 14862e9b3dac...
+golden samples/quickstart/expected/result.json matches
+quickstart ok

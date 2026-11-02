@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="RFQ compare">
+  <rect width="128" height="128" rx="28" fill="#0b1020"/>
+  <rect x="10" y="10" width="108" height="108" rx="22" fill="#141b30" stroke="#6ea8fe" stroke-width="3"/>
+  <path d="M64 30v18M30 48h68" stroke="#6ea8fe" stroke-width="4" stroke-linecap="round"/>
+  <path d="M30 48l-10 24h20L30 48zM98 48L88 72h20L98 48z" fill="none" stroke="#6ea8fe" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M48 92h32M56 84h16M64 76v8" stroke="#3fb950" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="64" cy="30" r="5" fill="#3fb950"/>
+</svg>

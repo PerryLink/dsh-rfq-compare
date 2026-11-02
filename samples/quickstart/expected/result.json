@@ -1,0 +1,481 @@
+{
+  "sample": "samples/quickstart/input/quotes.csv",
+  "assumptions": "samples/quickstart/input/assumptions.json",
+  "ingest": {
+    "added": 12,
+    "updated": 0,
+    "total": 12
+  },
+  "compare": {
+    "as_of": "2026-11-02",
+    "fx": {
+      "source": "placeholder",
+      "base": "CNY",
+      "rates_bp": {
+        "CNY": 10000,
+        "USD": 72000,
+        "EUR": 78000
+      },
+      "overridden": [],
+      "note": "Static placeholder rate (1 USD = 7.20 CNY, 1 EUR = 7.80 CNY), not live FX; override with fx_rates."
+    },
+    "summary": {
+      "materials": 4,
+      "quotes": 12,
+      "suppliers": 3,
+      "currencies": [
+        "CNY",
+        "EUR",
+        "USD"
+      ],
+      "below_cost": 2,
+      "over_budget": 2,
+      "expired": 2
+    },
+    "materials": [
+      {
+        "material": "MAT-1001",
+        "quote_count": 3,
+        "supplier_count": 3,
+        "quotes": [
+          {
+            "quote_id": "Q002",
+            "supplier": "DEMO-SUP-B",
+            "qty": 100,
+            "unit_price_cents": 17200,
+            "currency": "USD",
+            "unit_price_cny_cents": 123840,
+            "total_cents": 1720000,
+            "total_cny_cents": 12384000,
+            "lead_time_days": 21,
+            "valid_until": "2026-12-15",
+            "note": "USD quote, locked Q4",
+            "rank": 1,
+            "expired": false,
+            "below_cost": true
+          },
+          {
+            "quote_id": "Q001",
+            "supplier": "DEMO-SUP-A",
+            "qty": 100,
+            "unit_price_cents": 125000,
+            "currency": "CNY",
+            "unit_price_cny_cents": 125000,
+            "total_cents": 12500000,
+            "total_cny_cents": 12500000,
+            "lead_time_days": 14,
+            "valid_until": "2026-12-31",
+            "note": "annual frame price, CNY",
+            "rank": 2,
+            "expired": false,
+            "below_cost": false
+          },
+          {
+            "quote_id": "Q003",
+            "supplier": "DEMO-SUP-C",
+            "qty": 100,
+            "unit_price_cents": 131000,
+            "currency": "CNY",
+            "unit_price_cny_cents": 131000,
+            "total_cents": 13100000,
+            "total_cny_cents": 13100000,
+            "lead_time_days": 10,
+            "valid_until": "2026-11-30",
+            "note": "stock available",
+            "rank": 3,
+            "expired": false,
+            "below_cost": false
+          }
+        ],
+        "lowest": {
+          "quote_id": "Q002",
+          "supplier": "DEMO-SUP-B",
+          "qty": 100,
+          "unit_price_cents": 17200,
+          "currency": "USD",
+          "unit_price_cny_cents": 123840,
+          "total_cents": 1720000,
+          "total_cny_cents": 12384000,
+          "lead_time_days": 21,
+          "valid_until": "2026-12-15",
+          "note": "USD quote, locked Q4",
+          "rank": 1,
+          "expired": false,
+          "below_cost": true
+        },
+        "second_lowest": {
+          "quote_id": "Q001",
+          "supplier": "DEMO-SUP-A",
+          "qty": 100,
+          "unit_price_cents": 125000,
+          "currency": "CNY",
+          "unit_price_cny_cents": 125000,
+          "total_cents": 12500000,
+          "total_cny_cents": 12500000,
+          "lead_time_days": 14,
+          "valid_until": "2026-12-31",
+          "note": "annual frame price, CNY",
+          "rank": 2,
+          "expired": false,
+          "below_cost": false
+        },
+        "price_spread_cents": 1160,
+        "price_spread_bp": 94,
+        "lead_time_days": {
+          "min": 10,
+          "max": 21
+        },
+        "cost_line_cents": 124000,
+        "budget_cents": 12500000,
+        "anomalies": {
+          "below_cost": [
+            {
+              "quote_id": "Q002",
+              "supplier": "DEMO-SUP-B",
+              "unit_price_cny_cents": 123840,
+              "cost_cents": 124000,
+              "gap_cents": 160
+            }
+          ],
+          "over_budget": null,
+          "expired": []
+        }
+      },
+      {
+        "material": "MAT-1002",
+        "quote_count": 3,
+        "supplier_count": 3,
+        "quotes": [
+          {
+            "quote_id": "Q005",
+            "supplier": "DEMO-SUP-B",
+            "qty": 20,
+            "unit_price_cents": 8450,
+            "currency": "CNY",
+            "unit_price_cny_cents": 8450,
+            "total_cents": 169000,
+            "total_cny_cents": 169000,
+            "lead_time_days": 25,
+            "valid_until": "2026-10-25",
+            "note": "expired price list",
+            "rank": 1,
+            "expired": true,
+            "below_cost": false
+          },
+          {
+            "quote_id": "Q004",
+            "supplier": "DEMO-SUP-A",
+            "qty": 20,
+            "unit_price_cents": 8600,
+            "currency": "CNY",
+            "unit_price_cny_cents": 8600,
+            "total_cents": 172000,
+            "total_cny_cents": 172000,
+            "lead_time_days": 18,
+            "valid_until": "2026-12-20",
+            "note": "",
+            "rank": 2,
+            "expired": false,
+            "below_cost": false
+          },
+          {
+            "quote_id": "Q006",
+            "supplier": "DEMO-SUP-C",
+            "qty": 20,
+            "unit_price_cents": 11250,
+            "currency": "EUR",
+            "unit_price_cny_cents": 87750,
+            "total_cents": 225000,
+            "total_cny_cents": 1755000,
+            "lead_time_days": 30,
+            "valid_until": "2026-12-10",
+            "note": "EUR quote",
+            "rank": 3,
+            "expired": false,
+            "below_cost": false
+          }
+        ],
+        "lowest": {
+          "quote_id": "Q005",
+          "supplier": "DEMO-SUP-B",
+          "qty": 20,
+          "unit_price_cents": 8450,
+          "currency": "CNY",
+          "unit_price_cny_cents": 8450,
+          "total_cents": 169000,
+          "total_cny_cents": 169000,
+          "lead_time_days": 25,
+          "valid_until": "2026-10-25",
+          "note": "expired price list",
+          "rank": 1,
+          "expired": true,
+          "below_cost": false
+        },
+        "second_lowest": {
+          "quote_id": "Q004",
+          "supplier": "DEMO-SUP-A",
+          "qty": 20,
+          "unit_price_cents": 8600,
+          "currency": "CNY",
+          "unit_price_cny_cents": 8600,
+          "total_cents": 172000,
+          "total_cny_cents": 172000,
+          "lead_time_days": 18,
+          "valid_until": "2026-12-20",
+          "note": "",
+          "rank": 2,
+          "expired": false,
+          "below_cost": false
+        },
+        "price_spread_cents": 150,
+        "price_spread_bp": 178,
+        "lead_time_days": {
+          "min": 18,
+          "max": 30
+        },
+        "cost_line_cents": 8000,
+        "budget_cents": 180000,
+        "anomalies": {
+          "below_cost": [],
+          "over_budget": null,
+          "expired": [
+            {
+              "quote_id": "Q005",
+              "supplier": "DEMO-SUP-B",
+              "valid_until": "2026-10-25"
+            }
+          ]
+        }
+      },
+      {
+        "material": "MAT-1003",
+        "quote_count": 3,
+        "supplier_count": 3,
+        "quotes": [
+          {
+            "quote_id": "Q009",
+            "supplier": "DEMO-SUP-C",
+            "qty": 2,
+            "unit_price_cents": 241500,
+            "currency": "CNY",
+            "unit_price_cny_cents": 241500,
+            "total_cents": 483000,
+            "total_cny_cents": 483000,
+            "lead_time_days": 60,
+            "valid_until": "2026-11-15",
+            "note": "below cost line",
+            "rank": 1,
+            "expired": false,
+            "below_cost": true
+          },
+          {
+            "quote_id": "Q007",
+            "supplier": "DEMO-SUP-A",
+            "qty": 2,
+            "unit_price_cents": 248000,
+            "currency": "CNY",
+            "unit_price_cny_cents": 248000,
+            "total_cents": 496000,
+            "total_cny_cents": 496000,
+            "lead_time_days": 45,
+            "valid_until": "2026-12-31",
+            "note": "",
+            "rank": 2,
+            "expired": false,
+            "below_cost": false
+          },
+          {
+            "quote_id": "Q008",
+            "supplier": "DEMO-SUP-B",
+            "qty": 2,
+            "unit_price_cents": 255000,
+            "currency": "CNY",
+            "unit_price_cny_cents": 255000,
+            "total_cents": 510000,
+            "total_cny_cents": 510000,
+            "lead_time_days": 40,
+            "valid_until": "2026-12-31",
+            "note": "includes commissioning",
+            "rank": 3,
+            "expired": false,
+            "below_cost": false
+          }
+        ],
+        "lowest": {
+          "quote_id": "Q009",
+          "supplier": "DEMO-SUP-C",
+          "qty": 2,
+          "unit_price_cents": 241500,
+          "currency": "CNY",
+          "unit_price_cny_cents": 241500,
+          "total_cents": 483000,
+          "total_cny_cents": 483000,
+          "lead_time_days": 60,
+          "valid_until": "2026-11-15",
+          "note": "below cost line",
+          "rank": 1,
+          "expired": false,
+          "below_cost": true
+        },
+        "second_lowest": {
+          "quote_id": "Q007",
+          "supplier": "DEMO-SUP-A",
+          "qty": 2,
+          "unit_price_cents": 248000,
+          "currency": "CNY",
+          "unit_price_cny_cents": 248000,
+          "total_cents": 496000,
+          "total_cny_cents": 496000,
+          "lead_time_days": 45,
+          "valid_until": "2026-12-31",
+          "note": "",
+          "rank": 2,
+          "expired": false,
+          "below_cost": false
+        },
+        "price_spread_cents": 6500,
+        "price_spread_bp": 269,
+        "lead_time_days": {
+          "min": 40,
+          "max": 60
+        },
+        "cost_line_cents": 242000,
+        "budget_cents": 470000,
+        "anomalies": {
+          "below_cost": [
+            {
+              "quote_id": "Q009",
+              "supplier": "DEMO-SUP-C",
+              "unit_price_cny_cents": 241500,
+              "cost_cents": 242000,
+              "gap_cents": 500
+            }
+          ],
+          "over_budget": {
+            "budget_cents": 470000,
+            "lowest_total_cents": 483000,
+            "gap_cents": 13000
+          },
+          "expired": []
+        }
+      },
+      {
+        "material": "MAT-1004",
+        "quote_count": 3,
+        "supplier_count": 3,
+        "quotes": [
+          {
+            "quote_id": "Q010",
+            "supplier": "DEMO-SUP-A",
+            "qty": 50,
+            "unit_price_cents": 33000,
+            "currency": "CNY",
+            "unit_price_cny_cents": 33000,
+            "total_cents": 1650000,
+            "total_cny_cents": 1650000,
+            "lead_time_days": 12,
+            "valid_until": "2026-12-31",
+            "note": "",
+            "rank": 1,
+            "expired": false,
+            "below_cost": false
+          },
+          {
+            "quote_id": "Q012",
+            "supplier": "DEMO-SUP-C",
+            "qty": 50,
+            "unit_price_cents": 4280,
+            "currency": "EUR",
+            "unit_price_cny_cents": 33384,
+            "total_cents": 214000,
+            "total_cny_cents": 1669200,
+            "lead_time_days": 20,
+            "valid_until": "2026-10-15",
+            "note": "expired EUR quote",
+            "rank": 2,
+            "expired": true,
+            "below_cost": false
+          },
+          {
+            "quote_id": "Q011",
+            "supplier": "DEMO-SUP-B",
+            "qty": 50,
+            "unit_price_cents": 34200,
+            "currency": "CNY",
+            "unit_price_cny_cents": 34200,
+            "total_cents": 1710000,
+            "total_cny_cents": 1710000,
+            "lead_time_days": 9,
+            "valid_until": "2026-12-31",
+            "note": "fast delivery",
+            "rank": 3,
+            "expired": false,
+            "below_cost": false
+          }
+        ],
+        "lowest": {
+          "quote_id": "Q010",
+          "supplier": "DEMO-SUP-A",
+          "qty": 50,
+          "unit_price_cents": 33000,
+          "currency": "CNY",
+          "unit_price_cny_cents": 33000,
+          "total_cents": 1650000,
+          "total_cny_cents": 1650000,
+          "lead_time_days": 12,
+          "valid_until": "2026-12-31",
+          "note": "",
+          "rank": 1,
+          "expired": false,
+          "below_cost": false
+        },
+        "second_lowest": {
+          "quote_id": "Q012",
+          "supplier": "DEMO-SUP-C",
+          "qty": 50,
+          "unit_price_cents": 4280,
+          "currency": "EUR",
+          "unit_price_cny_cents": 33384,
+          "total_cents": 214000,
+          "total_cny_cents": 1669200,
+          "lead_time_days": 20,
+          "valid_until": "2026-10-15",
+          "note": "expired EUR quote",
+          "rank": 2,
+          "expired": true,
+          "below_cost": false
+        },
+        "price_spread_cents": 384,
+        "price_spread_bp": 116,
+        "lead_time_days": {
+          "min": 9,
+          "max": 20
+        },
+        "cost_line_cents": 32000,
+        "budget_cents": 1600000,
+        "anomalies": {
+          "below_cost": [],
+          "over_budget": {
+            "budget_cents": 1600000,
+            "lowest_total_cents": 1650000,
+            "gap_cents": 50000
+          },
+          "expired": [
+            {
+              "quote_id": "Q012",
+              "supplier": "DEMO-SUP-C",
+              "valid_until": "2026-10-15"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "csv": {
+    "path": "exports/rfq-compare.csv",
+    "sha256": "14862e9b3daca81a3e5a7fa3fc60745edd93b5f8835c6bdc51993155d4539e37",
+    "bytes": 895,
+    "rows": 4,
+    "text": "material,quote_count,supplier_count,lowest_quote_id,lowest_supplier,lowest_unit_price_cents,lowest_currency,lowest_unit_price_cny_cents,lowest_total_cny_cents,second_quote_id,second_supplier,second_unit_price_cents,second_currency,second_unit_price_cny_cents,price_spread_cents,price_spread_bp,lead_time_min_days,lead_time_max_days,cost_line_cents,below_cost_count,budget_cents,over_budget,expired_count\nMAT-1001,3,3,Q002,DEMO-SUP-B,17200,USD,123840,12384000,Q001,DEMO-SUP-A,125000,CNY,125000,1160,94,10,21,124000,1,12500000,false,0\nMAT-1002,3,3,Q005,DEMO-SUP-B,8450,CNY,8450,169000,Q004,DEMO-SUP-A,8600,CNY,8600,150,178,18,30,8000,0,180000,false,1\nMAT-1003,3,3,Q009,DEMO-SUP-C,241500,CNY,241500,483000,Q007,DEMO-SUP-A,248000,CNY,248000,6500,269,40,60,242000,1,470000,true,0\nMAT-1004,3,3,Q010,DEMO-SUP-A,33000,CNY,33000,1650000,Q012,DEMO-SUP-C,4280,EUR,33384,384,116,9,20,32000,0,1600000,true,1\n"
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/assets/quickstart.png",
+    "kind": "quickstart",
+    "alt": "dsh-rfq-compare quickstart terminal output",
+    "caption": "Real command: node samples/quickstart/run.mjs --check — 3 suppliers x 4 materials, placeholder FX, lowest/second/spread, and the three anomaly classes. Rendered from the captured terminal output.",
+    "command": "node samples/quickstart/run.mjs --check",
+    "run_at": "2026-11-02T15:07:24Z",
+    "output_sha256": "4bb1bae8eabf94582fa1908c087fbe1a9dd9ca552567c54b733375d3a977fd0f",
+    "output_path": "samples/quickstart/expected/result.json",
+    "log": "docs/assets/quickstart.log",
+    "log_sha256": "756d7a8f910e8ac2042fece61bdc42ee466167f99def5f597a1ca751953a94e6",
+    "image_sha256": "f6f55d41cc492e14c40f638d600379c6285ee1b69a57203e9643e8402b98a32c"
+  },
+  {
+    "path": "docs/assets/dsh-rfq-compare-flow.svg",
+    "kind": "flow",
+    "alt": "dsh-rfq-compare workflow diagram",
+    "caption": "Pipeline diagram: local quotes CSV to integer cents, per-material comparison and a local CSV export; schematic, not test evidence.",
+    "image_sha256": "a58704273dcda753de92a6f580c6e2cb5aa071777ec5e2ef3540b43bf4ac7b11"
+  }
+]
