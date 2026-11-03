@@ -161,7 +161,7 @@ No. It reads only the quote/assumption files you point it at; it writes only to 
 
 ## Version
 
-`0.1.0-alpha.1` · 36 tests pass (`node --test test/*.test.mjs`).
+`0.1.0` · 36 tests pass (`node --test test/*.test.mjs`).
 
 > ⭐ If it helps, a star makes it easier for the next person to find; no feature is unlocked by stars.
 
