@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-dark.svg">
-  <img src="docs/assets/dsh-rfq-compare-flow-light.svg" width="100%" alt="dsh-rfq-compare 管线：报价 CSV → rfq.ingest 整数分 → rfq.compare 按物料比价与三类异常 → rfq.export 本地 CSV + sha256；不联网、不调用模型">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-rfq-compare-hero-zh-light.webp" width="100%" alt="dsh-rfq-compare 配图：混合币种报价折算为整数分后，按物料排出最低价、次低价与价差，三类异常只做标记，最后导出带 sha256 的本地 CSV">
 </picture>
 
 # dsh-rfq-compare
@@ -41,6 +41,13 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 
 - **适合**：询价后收到 2～10 家供应商、同一物料多家报价的比价；需要把「谁最低、差多少、交期多久、有没有低于成本或超预算」一次说清楚；需要一张能交给采购经理复核的 CSV。
 - **不适合**：招投标评分、供应商准入、合同条款审查；需要实时汇率、税率、运费、关税的到岸成本；把报价写进 ERP 或自动下单；用模型“猜”一个不存在的价格。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="dsh-rfq-compare 比价链路：CSV 与 JSON 双通道汇入 rfq.ingest，金额统一为整数分，按物料×供应商排成记分矩阵，三类异常进入只标记不淘汰的边界侧栏，最后由 rfq.export 写出带 sha256 的本地 CSV">
+</picture>
+
+<sub>双通道报价 → 整数分归一 → 物料记分矩阵 → 本地 CSV 凭证；异常只标记、不自动淘汰，输入文件只读。</sub>
 
 ## 三步上手
 
@@ -309,7 +316,7 @@ node scripts/gate.mjs
 
 当前版本 `0.1.0` · 36 项测试（`node --test test/*.test.mjs`）。发布门是 `pnpm gate`：先跑元数据与 README 检查（`scripts/lint.mjs`），再跑验收（`scripts/acceptance.mjs`），最后核对 `ACCEPTANCE.csv` 每一行 `pass=true`。
 
-配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow）：产出 `dsh-rfq-compare-flow-{light,dark}.svg` 两张矢量 hero，可重复执行；本仓没有 benchmark 数据，因此不生成实测条形图。
+配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow hero + 手写 SVG）：产出 `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` 与 `dsh-rfq-compare-flow-v5-{light,dark}.svg`，可重复执行；本仓没有 benchmark 数据，因此不生成实测条形图。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `rfq`, `quote`, `procurement`, `compare`, `csv`, `perrylink`
 

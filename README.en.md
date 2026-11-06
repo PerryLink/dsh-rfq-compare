@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-dark.svg">
-  <img src="docs/assets/dsh-rfq-compare-flow-light.svg" width="100%" alt="dsh-rfq-compare pipeline: quotes CSV → rfq.ingest integer cents → rfq.compare per-material comparison and three anomaly classes → rfq.export local CSV plus sha256; no network, no model call">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-hero-en-dark.webp">
+  <img src="docs/assets/dsh-rfq-compare-hero-en-light.webp" width="100%" alt="dsh-rfq-compare hero: mixed-currency quotes normalised to integer cents, ranked per material by lowest, second-lowest and spread, with three advisory flags and a local CSV export carrying a sha256">
 </picture>
 
 # dsh-rfq-compare
@@ -41,6 +41,13 @@ One material, three suppliers, three prices — possibly in CNY, USD and EUR, wi
 
 - **Fits:** post-RFQ comparison when one material has 2–10 supplier quotes; answering "who is cheapest, by how much, how fast, and is anything below cost or over budget"; handing a buyer a CSV to review.
 - **Does not fit:** tender scoring, supplier qualification, contract review; landed cost with live FX, freight, duty or tax; writing back to an ERP or placing orders; letting a model invent a price.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="dsh-rfq-compare comparison chain: CSV and JSON quote channels meet rfq.ingest, normalise to integer cents, rank into a material by supplier score matrix, carry three advisory anomaly flags, and write a local CSV with sha256 through rfq.export">
+</picture>
+
+<sub>Dual quote channels → integer cents → material score matrix → local CSV artifact; anomalies are flags, never auto-rejections, and input files stay read-only.</sub>
 
 ## Three-step setup
 
@@ -309,7 +316,7 @@ node scripts/gate.mjs
 
 Current version `0.1.0` · 36 tests (`node --test test/*.test.mjs`). The release gate is `pnpm gate`: metadata and README checks first (`scripts/lint.mjs`), then acceptance (`scripts/acceptance.mjs`), then every `ACCEPTANCE.csv` row must have `pass=true`.
 
-The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow): it writes the two vector heroes `dsh-rfq-compare-flow-{light,dark}.svg` and is safe to re-run; this repo has no benchmark data, so no measured-data bar chart is produced.
+The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow hero + hand-written SVG): it writes `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` and `dsh-rfq-compare-flow-v5-{light,dark}.svg`, and is safe to re-run; this repo has no benchmark data, so no measured-data bar chart is produced.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `rfq`, `quote`, `procurement`, `compare`, `csv`, `perrylink`
 

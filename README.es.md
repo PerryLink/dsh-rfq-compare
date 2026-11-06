@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-dark.svg">
-  <img src="docs/assets/dsh-rfq-compare-flow-light.svg" width="100%" alt="Pipeline de dsh-rfq-compare: CSV de cotizaciones → rfq.ingest en céntimos enteros → rfq.compare por material y tres clases de anomalía → rfq.export CSV local más sha256; sin red y sin llamada al modelo">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-hero-en-dark.webp">
+  <img src="docs/assets/dsh-rfq-compare-hero-en-light.webp" width="100%" alt="dsh-rfq-compare: cotizaciones en varias monedas normalizadas a céntimos enteros, ordenadas por material según precio mínimo, segundo mínimo y diferencia, con tres marcas de anomalía y una exportación CSV local con sha256">
 </picture>
 
 # dsh-rfq-compare
@@ -41,6 +41,13 @@ Un material, tres proveedores, tres precios: puede haber CNY, USD y EUR mezclado
 
 - **Encaja:** comparar después de la RFQ cuando un material tiene de 2 a 10 cotizaciones; responder «quién es más barato, cuánto, con qué plazo y si algo está por debajo del coste o por encima del presupuesto»; entregar al comprador un CSV para revisar.
 - **No encaja:** puntuar licitaciones, homologar proveedores, revisar contratos; coste aterrizado con tipo de cambio en vivo, flete, aranceles o impuestos; escribir en un ERP o hacer pedidos; dejar que un modelo invente un precio.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="Cadena de comparación de dsh-rfq-compare: los canales CSV y JSON entran en rfq.ingest, se normalizan a céntimos enteros, se ordenan en una matriz material × proveedor, reciben tres marcas de anomalía y rfq.export escribe un CSV local con sha256">
+</picture>
+
+<sub>Dos canales de cotizaciones → céntimos enteros → matriz de puntuación por material → CSV local; las anomalías son marcas, no descalificaciones, y los archivos de entrada quedan en solo lectura.</sub>
 
 ## Instalación en tres pasos
 
@@ -309,7 +316,7 @@ node scripts/gate.mjs
 
 Versión actual `0.1.0` · 36 pruebas (`node --test test/*.test.mjs`). La puerta de release es `pnpm gate`: primero metadatos y comprobaciones de README (`scripts/lint.mjs`), después aceptación (`scripts/acceptance.mjs`) y por último cada fila de `ACCEPTANCE.csv` debe tener `pass=true`.
 
-Las imágenes del README se generan de forma programática con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow): escribe los dos héroes vectoriales `dsh-rfq-compare-flow-{light,dark}.svg` y se puede volver a ejecutar; este repo no tiene datos de benchmark, así que no se produce el gráfico de datos medidos.
+Las imágenes del README se generan de forma programática con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (hero con Pillow + SVG escrito a mano): escribe `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` y `dsh-rfq-compare-flow-v5-{light,dark}.svg`, y se puede volver a ejecutar; este repo no tiene datos de benchmark, así que no se produce el gráfico de datos medidos.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `rfq`, `quote`, `procurement`, `compare`, `csv`, `perrylink`
 

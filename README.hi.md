@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-dark.svg">
-  <img src="docs/assets/dsh-rfq-compare-flow-light.svg" width="100%" alt="dsh-rfq-compare पाइपलाइन: कोटेशन CSV → rfq.ingest पूर्णांक सेंट → rfq.compare प्रति-सामग्री तुलना और तीन विसंगति श्रेणियाँ → rfq.export स्थानीय CSV और sha256; कोई नेटवर्क नहीं, कोई मॉडल कॉल नहीं">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-hero-en-dark.webp">
+  <img src="docs/assets/dsh-rfq-compare-hero-en-light.webp" width="100%" alt="dsh-rfq-compare: मिश्रित मुद्राओं के कोटेशन पूर्णांक सेंट में बदलकर, प्रति सामग्री सबसे कम, दूसरे सबसे कम और अंतर के अनुसार क्रमबद्ध, तीन विसंगति चिह्नों और sha256 वाले स्थानीय CSV निर्यात के साथ">
 </picture>
 
 # dsh-rfq-compare
@@ -41,6 +41,13 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 
 - **किसके लिए है:** RFQ के बाद जब एक सामग्री के लिए 2–10 आपूर्तिकर्ताओं के कोटेशन हों; यह बताना कि सबसे सस्ता कौन है, कितना अंतर है, लीड टाइम कितना है, और कहीं कुछ लागत से नीचे या बजट से ऊपर है या नहीं; खरीदार को जाँचने के लिए CSV देना।
 - **किसके लिए नहीं:** निविदा स्कोरिंग, आपूर्तिकर्ता योग्यता, अनुबंध समीक्षा; लाइव विनिमय दर, भाड़ा, सीमा शुल्क या कर सहित लैंडेड कॉस्ट; ERP में वापस लिखना या ऑर्डर देना; मॉडल से कोई मनगढ़ंत कीमत “अनुमान” करवाना।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="dsh-rfq-compare तुलना श्रृंखला: CSV और JSON कोटेशन चैनल rfq.ingest में आते हैं, पूर्णांक सेंट में सामान्य होते हैं, सामग्री × आपूर्तिकर्ता स्कोर मैट्रिक्स में क्रमबद्ध होते हैं, तीन सलाहकारी विसंगति चिह्न लेते हैं, और rfq.export sha256 वाली स्थानीय CSV लिखता है">
+</picture>
+
+<sub>दो कोटेशन चैनल → पूर्णांक सेंट → सामग्री स्कोर मैट्रिक्स → स्थानीय CSV; विसंगतियाँ केवल चिह्न हैं, स्वतः बाहर नहीं, और इनपुट फ़ाइलें केवल-पढ़ने योग्य रहती हैं।</sub>
 
 ## तीन चरणों में शुरुआत
 
@@ -309,7 +316,7 @@ node scripts/gate.mjs
 
 वर्तमान संस्करण `0.1.0` · 36 परीक्षण (`node --test test/*.test.mjs`)। रिलीज़ गेट `pnpm gate` है: पहले मेटाडेटा और README जाँच (`scripts/lint.mjs`), फिर स्वीकृति (`scripts/acceptance.mjs`), और अंत में `ACCEPTANCE.csv` की हर पंक्ति में `pass=true` होना चाहिए।
 
-README की तस्वीरें [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) से प्रोग्रामेटिक रूप से बनती हैं: दो वेक्टर हीरो `dsh-rfq-compare-flow-{light,dark}.svg` लिखता है और दोबारा चलाया जा सकता है; इस रेपो में benchmark डेटा नहीं है, इसलिए मापे गए डेटा का चार्ट नहीं बनता।
+README की तस्वीरें [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow हीरो + हस्तलिखित SVG) से प्रोग्रामेटिक रूप से बनती हैं: `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` और `dsh-rfq-compare-flow-v5-{light,dark}.svg` लिखता है और दोबारा चलाया जा सकता है; इस रेपो में benchmark डेटा नहीं है, इसलिए मापे गए डेटा का चार्ट नहीं बनता।
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `rfq`, `quote`, `procurement`, `compare`, `csv`, `perrylink`
 

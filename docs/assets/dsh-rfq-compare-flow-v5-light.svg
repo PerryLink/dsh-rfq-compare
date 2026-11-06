@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="660" viewBox="0 0 1100 660" role="img" aria-label="dsh-rfq-compare comparison chain">
+<title>dsh-rfq-compare comparison chain</title>
+<desc>CSV and JSON quotes enter rfq.ingest, normalize to integer cents, rank into a material by supplier score matrix, carry three advisory anomaly flags, then rfq.export writes a local CSV with sha256.</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9f6fd"/><stop offset="1" stop-color="#e4eaf8"/></linearGradient>
+<radialGradient id="glow" cx="85%" cy="8%" r="75%"><stop offset="0" stop-color="#4B67B4" stop-opacity=".16"/><stop offset="1" stop-color="#4B67B4" stop-opacity="0"/></radialGradient>
+<pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.4" cy="1.4" r="1.2" fill="#4B67B4" opacity=".14"/></pattern>
+<filter id="soft" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#1f2a4a" flood-opacity=".10"/></filter>
+<marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#5c6883"/></marker>
+</defs>
+<rect width="1100" height="660" rx="22" fill="url(#bg)"/>
+<rect width="1100" height="660" rx="22" fill="url(#glow)"/>
+<rect width="1100" height="660" rx="22" fill="url(#dots)"/>
+<text x="44" y="42" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="700" text-anchor="start" letter-spacing="1.7">DSH PLUGIN · RFQ COMPARE</text>
+<text x="44" y="82" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="28" font-weight="700">dsh-<tspan fill="#4B67B4">rfq-compare</tspan></text>
+<text x="44" y="108" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="13" font-weight="400" text-anchor="start">quotes CSV / JSON  →  integer cents  →  material score matrix  →  local CSV receipt</text>
+<rect x="820" y="24" width="104" height="24" rx="12" fill="#ffffff" stroke="#dfe5f4" stroke-width="1"/>
+<circle cx="832" cy="36" r="3" fill="#168a4a"/>
+<text x="841" y="40" fill="#168a4a" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="700" text-anchor="start">NO NETWORK</text>
+<rect x="932" y="24" width="124" height="24" rx="12" fill="#ffffff" stroke="#dfe5f4" stroke-width="1"/>
+<circle cx="944" cy="36" r="3" fill="#4B67B4"/>
+<text x="953" y="40" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="700" text-anchor="start">FX PLACEHOLDER</text>
+<line x1="44" y1="124" x2="1056" y2="124" stroke="#d3dbee" stroke-width="1"/>
+<text x="44" y="166" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="start" letter-spacing="1.2">INPUT</text>
+<text x="318" y="166" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="start" letter-spacing="1.2">TOOLS</text>
+<text x="858" y="166" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="start" letter-spacing="1.2">OUTPUT</text>
+<rect x="44" y="178" width="256" height="106" rx="18" fill="#ffffff" stroke="#dfe5f4" stroke-width="1"/>
+<text x="62" y="212" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="16" font-weight="700" text-anchor="start">quotes.csv</text>
+<text x="62" y="234" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">supplier · material · qty</text>
+<text x="62" y="252" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">unit_price_cents | unit_price</text>
+<text x="62" y="270" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="start">currency · lead_time · valid_until</text>
+<rect x="266" y="192" width="22" height="28" rx="5" fill="#f4f7ff" stroke="#d3dbee"/>
+<path d="M272 200h10M272 206h10M272 212h6" stroke="#4B67B4" stroke-width="1.4" stroke-linecap="round"/>
+<rect x="44" y="296" width="256" height="106" rx="18" fill="#ffffff" stroke="#dfe5f4" stroke-width="1"/>
+<text x="62" y="330" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="16" font-weight="700" text-anchor="start">quotes[]</text>
+<text x="62" y="352" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">same fields as CSV</text>
+<text x="62" y="370" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">supplier + material = key</text>
+<text x="62" y="388" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">re-import replaces that row</text>
+<text x="276" y="216" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="17" font-weight="700" text-anchor="middle">{ }</text>
+<rect x="44" y="414" width="256" height="120" rx="18" fill="#f4f7ff" stroke="#dfe5f4" stroke-width="1"/>
+<text x="62" y="442" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="15" font-weight="700" text-anchor="start">assumptions</text>
+<text x="62" y="460" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">optional · feeds compare</text>
+<rect x="60" y="470" width="86" height="24" rx="8" fill="#ffffff" stroke="#d3dbee" stroke-width="1"/>
+<text x="68" y="487" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11.5" font-weight="400" text-anchor="start">cost_lines</text>
+<rect x="154" y="470" width="68" height="24" rx="8" fill="#ffffff" stroke="#d3dbee" stroke-width="1"/>
+<text x="162" y="487" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11.5" font-weight="400" text-anchor="start">budgets</text>
+<rect x="60" y="500" width="74" height="24" rx="8" fill="#ffffff" stroke="#d3dbee" stroke-width="1"/>
+<text x="68" y="517" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11.5" font-weight="400" text-anchor="start">fx_rates</text>
+<rect x="142" y="500" width="56" height="24" rx="8" fill="#ffffff" stroke="#d3dbee" stroke-width="1"/>
+<text x="150" y="517" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11.5" font-weight="400" text-anchor="start">as_of</text>
+<rect x="44" y="548" width="120" height="26" rx="13" fill="#edf1fc" stroke="#d3dbee" stroke-width="1"/>
+<text x="56" y="565" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="700" text-anchor="start">R0 · READ-ONLY</text>
+<rect x="318" y="180" width="112" height="98" rx="18" fill="#ffffff" stroke="#dfe5f4" stroke-width="1" filter="url(#soft)"/>
+<text x="332" y="208" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="700" text-anchor="start">rfq.ingest</text>
+<text x="332" y="230" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">validate fields</text>
+<text x="332" y="248" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">integer cents</text>
+<text x="332" y="266" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">Q001… · R0</text>
+<rect x="318" y="286" width="112" height="84" rx="18" fill="#ffffff" stroke="#dfe5f4" stroke-width="1"/>
+<text x="332" y="312" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="700" text-anchor="start">quote table</text>
+<text x="332" y="332" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">in-memory Map</text>
+<text x="332" y="350" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">Q001…Q012</text>
+<text x="332" y="366" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">replace on key</text>
+<rect x="318" y="384" width="112" height="110" rx="18" fill="#ffffff" stroke="#dfe5f4" stroke-width="1" filter="url(#soft)"/>
+<text x="332" y="412" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="700" text-anchor="start">rfq.compare</text>
+<text x="332" y="434" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">group by material</text>
+<text x="332" y="452" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">× FX bp → CNY</text>
+<text x="332" y="470" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">sort · rank 1/2/3</text>
+<text x="332" y="488" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">3 anomaly classes</text>
+<path d="M300 231 H312" fill="none" stroke="#5c6883" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M300 349 C310 349 310 255 318 255" fill="none" stroke="#5c6883" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M300 474 H318" fill="none" stroke="#5c6883" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 5" marker-end="url(#arrow)"/>
+<path d="M374 278 V286" fill="none" stroke="#5c6883" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M374 370 V384" fill="none" stroke="#5c6883" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M430 439 H450" fill="none" stroke="#5c6883" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="450" y="150" width="384" height="422" rx="18" fill="#ffffff" stroke="#dfe5f4" stroke-width="1" filter="url(#soft)"/>
+<path d="M450 168 Q450 150 468 150 H816 Q834 150 834 168 V236 H450 Z" fill="#edf1fc" opacity=".55"/>
+<text x="468" y="176" fill="#1b2133" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="14.5" font-weight="700" text-anchor="start">MATERIAL × SUPPLIER MATRIX</text>
+<text x="468" y="195" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="start">normalized CNY cents · rank per material</text>
+<text x="462" y="224" fill="#8b95ab" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="start" letter-spacing="0.7">MATERIAL</text>
+<text x="569" y="224" fill="#8b95ab" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="middle">SUP-A</text>
+<text x="639" y="224" fill="#8b95ab" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="middle">SUP-B</text>
+<text x="709" y="224" fill="#8b95ab" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="middle">SUP-C</text>
+<text x="824" y="224" fill="#8b95ab" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="end" letter-spacing="0.7">SPREAD</text>
+<line x1="450" y1="236" x2="834" y2="236" stroke="#d3dbee" stroke-width="1"/>
+<line x1="534" y1="208" x2="534" y2="572" stroke="#e5eaf6" stroke-width="1"/>
+<line x1="604" y1="208" x2="604" y2="572" stroke="#e5eaf6" stroke-width="1"/>
+<line x1="674" y1="208" x2="674" y2="572" stroke="#e5eaf6" stroke-width="1"/>
+<line x1="744" y1="208" x2="744" y2="572" stroke="#e5eaf6" stroke-width="1"/>
+<line x1="450" y1="320" x2="834" y2="320" stroke="#e5eaf6" stroke-width="1"/>
+<line x1="450" y1="404" x2="834" y2="404" stroke="#e5eaf6" stroke-width="1"/>
+<line x1="450" y1="488" x2="834" y2="488" stroke="#e5eaf6" stroke-width="1"/>
+<rect x="604" y="236" width="70" height="84" rx="0" fill="#edf1fc" opacity="0.72"/>
+<rect x="604" y="320" width="70" height="84" rx="0" fill="#edf1fc" opacity="0.72"/>
+<rect x="674" y="404" width="70" height="84" rx="0" fill="#edf1fc" opacity="0.72"/>
+<rect x="534" y="488" width="70" height="84" rx="0" fill="#edf1fc" opacity="0.72"/>
+<text x="462" y="266" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13" font-weight="700" text-anchor="start">MAT-1001</text>
+<text x="462" y="286" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="start">3 quotes</text>
+<text x="569" y="264" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="400" text-anchor="middle">125,000</text>
+<text x="569" y="282" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q001 · CNY</text>
+<text x="569" y="300" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">2nd</text>
+<text x="639" y="264" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="700" text-anchor="middle">123,840</text>
+<text x="639" y="282" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q002 · USD</text>
+<text x="639" y="300" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="middle">1st</text>
+<text x="709" y="264" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="400" text-anchor="middle">131,000</text>
+<text x="709" y="282" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q003 · CNY</text>
+<text x="709" y="300" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">3rd</text>
+<text x="824" y="266" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13" font-weight="700" text-anchor="end">1,160</text>
+<text x="824" y="286" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="end">94 bp</text>
+<text x="462" y="350" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13" font-weight="700" text-anchor="start">MAT-1002</text>
+<text x="462" y="370" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="start">3 quotes</text>
+<text x="569" y="348" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="400" text-anchor="middle">8,600</text>
+<text x="569" y="366" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q004 · CNY</text>
+<text x="569" y="384" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">2nd</text>
+<text x="639" y="348" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="700" text-anchor="middle">8,450</text>
+<text x="639" y="366" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q005 · CNY</text>
+<text x="639" y="384" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="middle">1st</text>
+<text x="709" y="348" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="400" text-anchor="middle">87,750</text>
+<text x="709" y="366" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q006 · EUR</text>
+<text x="709" y="384" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">3rd</text>
+<text x="824" y="350" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13" font-weight="700" text-anchor="end">150</text>
+<text x="824" y="370" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="end">178 bp</text>
+<text x="462" y="434" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13" font-weight="700" text-anchor="start">MAT-1003</text>
+<text x="462" y="454" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="start">3 quotes</text>
+<text x="569" y="432" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="400" text-anchor="middle">248,000</text>
+<text x="569" y="450" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q007 · CNY</text>
+<text x="569" y="468" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">2nd</text>
+<text x="639" y="432" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="400" text-anchor="middle">255,000</text>
+<text x="639" y="450" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q008 · CNY</text>
+<text x="639" y="468" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">3rd</text>
+<text x="709" y="432" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="700" text-anchor="middle">241,500</text>
+<text x="709" y="450" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q009 · CNY</text>
+<text x="709" y="468" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="middle">1st</text>
+<text x="824" y="434" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13" font-weight="700" text-anchor="end">6,500</text>
+<text x="824" y="454" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="end">269 bp</text>
+<text x="462" y="518" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13" font-weight="700" text-anchor="start">MAT-1004</text>
+<text x="462" y="538" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="start">3 quotes</text>
+<text x="569" y="516" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="700" text-anchor="middle">33,000</text>
+<text x="569" y="534" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q010 · CNY</text>
+<text x="569" y="552" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="700" text-anchor="middle">1st</text>
+<text x="639" y="516" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="400" text-anchor="middle">34,200</text>
+<text x="639" y="534" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q011 · CNY</text>
+<text x="639" y="552" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">3rd</text>
+<text x="709" y="516" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13.5" font-weight="400" text-anchor="middle">33,384</text>
+<text x="709" y="534" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">Q012 · EUR</text>
+<text x="709" y="552" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">2nd</text>
+<text x="824" y="518" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="13" font-weight="700" text-anchor="end">384</text>
+<text x="824" y="538" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="end">116 bp</text>
+<rect x="858" y="178" width="198" height="222" rx="18" fill="#ffffff" stroke="#dfe5f4" stroke-width="1" filter="url(#soft)"/>
+<text x="874" y="200" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="13" font-weight="700" text-anchor="start" letter-spacing="0.8">ADVISORY BOUNDARY</text>
+<text x="874" y="216" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="start">flags, not disqualification</text>
+<text x="874" y="246" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11.5" font-weight="700" text-anchor="start">MAT-1001</text>
+<circle cx="877.0" cy="259" r="3" fill="#bc4c00"/>
+<text x="884.0" y="263" fill="#bc4c00" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="600" text-anchor="start">below cost</text>
+<text x="874" y="286" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11.5" font-weight="700" text-anchor="start">MAT-1002</text>
+<circle cx="877.0" cy="299" r="3" fill="#c93c3c"/>
+<text x="884.0" y="303" fill="#c93c3c" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="600" text-anchor="start">expired</text>
+<text x="874" y="326" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11.5" font-weight="700" text-anchor="start">MAT-1003</text>
+<circle cx="877.0" cy="339" r="3" fill="#bc4c00"/>
+<text x="884.0" y="343" fill="#bc4c00" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="600" text-anchor="start">below cost</text>
+<circle cx="958.0" cy="339" r="3" fill="#4B67B4"/>
+<text x="965.0" y="343" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="600" text-anchor="start">over budget</text>
+<text x="874" y="366" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11.5" font-weight="700" text-anchor="start">MAT-1004</text>
+<circle cx="877.0" cy="379" r="3" fill="#4B67B4"/>
+<text x="884.0" y="383" fill="#4B67B4" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="600" text-anchor="start">over budget</text>
+<circle cx="963.9" cy="379" r="3" fill="#c93c3c"/>
+<text x="970.9" y="383" fill="#c93c3c" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="600" text-anchor="start">expired</text>
+<rect x="858" y="414" width="198" height="158" rx="18" fill="#ffffff" stroke="#dfe5f4" stroke-width="1" filter="url(#soft)"/>
+<text x="874" y="438" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="13" font-weight="700" text-anchor="start" letter-spacing="0.8">LOCAL CSV</text>
+<rect x="990" y="422" width="48" height="22" rx="11" fill="#168a4a"/>
+<text x="1014" y="437" fill="#ffffff" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="700" text-anchor="middle">R1</text>
+<text x="874" y="462" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="15" font-weight="700" text-anchor="start">rfq.export</text>
+<text x="874" y="482" fill="#5c6883" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11" font-weight="400" text-anchor="start">$DSH_HOME/…/exports/</text>
+<text x="874" y="502" fill="#1b2133" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="12.5" font-weight="700" text-anchor="start">rfq-compare.csv</text>
+<text x="874" y="522" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">4 rows · 895 B</text>
+<text x="874" y="540" fill="#5c6883" font-family="Consolas, SFMono-Regular, Menlo, Microsoft YaHei, monospace" font-size="11.5" font-weight="400" text-anchor="start">sha256 14862e9b…</text>
+<text x="874" y="558" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11" font-weight="400" text-anchor="start">input read-only</text>
+<path d="M834 300 H858" fill="none" stroke="#4B67B4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 5" marker-end="url(#arrow)"/>
+<path d="M834 480 H858" fill="none" stroke="#5c6883" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<line x1="44" y1="596" x2="1056" y2="596" stroke="#d3dbee" stroke-width="1"/>
+<text x="44" y="622" fill="#5c6883" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="400" text-anchor="start">no network · no model call · FX = documented placeholder · input files stay read-only</text>
+<text x="1056" y="622" fill="#4B67B4" font-family="Microsoft YaHei, Segoe UI, Noto Sans CJK SC, sans-serif" font-size="11.5" font-weight="600" text-anchor="end">3 tools · 4 materials · 12 quotes</text>
+</svg>
