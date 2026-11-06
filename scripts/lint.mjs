@@ -33,39 +33,28 @@ if (demo) {
 }
 
 const files = pkg.files ?? []
-for (const entry of ['samples', 'docs/assets', 'TROUBLESHOOTING.md', 'README-zh.md']) {
+for (const entry of ['samples', 'docs/assets', 'TROUBLESHOOTING.md']) {
   check(files.includes(entry), `files[] must include ${entry}`)
 }
-for (const entry of ['README-es.md', 'README-pt.md', 'README-hi.md']) check(files.includes(entry), `files[] must include ${entry}`)
 
-const readmeZh = read('README-zh.md')
-const readme = read('README.md')
+const readmeZh = read('README.md')
+const readme = read('README.en.md')
 const troubleshooting = read('TROUBLESHOOTING.md')
 for (const [label, text, patterns] of [
   [
-    'README-zh',
+    'README',
     readmeZh,
-    [/一句话/, /适合[\s\S]*不适合/, /输入/, /输出/, /示例/, /权限/, /^#{2,3}\s*FAQ/m, new RegExp(pkg.version.replace(/\./g, '\\.'))],
+    [/它是什么/, /适合[\s\S]*不适合/, /输入/, /输出/, /示例/, /权限/, /^#{2,3}\s*FAQ/m, new RegExp(pkg.version.replace(/\./g, '\\.'))],
   ],
-  ['README', readme, [/一句话|One-liner|What it does/i, /fit/i, /Input/i, /Output/i, /Example/i, /Permission/i, /FAQ/i, new RegExp(pkg.version.replace(/\./g, '\\.'))]],
+  ['README.en', readme, [/What it is/i, /fit/i, /Input/i, /Output/i, /Example/i, /Permission/i, /FAQ/i, new RegExp(pkg.version.replace(/\./g, '\\.'))]],
 ]) {
   for (const pattern of patterns) check(pattern.test(text), `${label} is missing section matching ${pattern}`)
 }
-check(/读[:：]/.test(readmeZh), 'README-zh must declare 读：')
-check(/写[:：]/.test(readmeZh), 'README-zh must declare 写：')
-check(/联网[:：]/.test(readmeZh), 'README-zh must declare 联网：')
-check(/外部系统[:：]/.test(readmeZh), 'README-zh must declare 外部系统：')
-check(demo?.prompt && readmeZh.includes(demo.prompt.slice(0, 12)), 'README-zh must contain dsh.demo.prompt')
-
-for (const [file, marker] of [
-  ['README-es.md', 'Documentación completa'],
-  ['README-pt.md', 'Documentação completa'],
-  ['README-hi.md', 'पूरा दस्तावेज़'],
-]) {
-  const body = read(file)
-  check(body.includes('# dsh-rfq-compare'), `${file} must start with the package heading`)
-  check(body.includes(marker) && body.includes('README-zh.md'), `${file} must link to README-zh.md`)
-}
+check(/读[:：]/.test(readmeZh), 'README must declare 读：')
+check(/写[:：]/.test(readmeZh), 'README must declare 写：')
+check(/联网[:：]/.test(readmeZh), 'README must declare 联网：')
+check(/外部系统[:：]/.test(readmeZh), 'README must declare 外部系统：')
+check(demo?.prompt && readmeZh.includes(demo.prompt.slice(0, 12)), 'README must contain dsh.demo.prompt')
 
 const codeMatches = [...troubleshooting.matchAll(/\bE_RFQ_[A-Z0-9_]+\b/g)].map((match) => match[0])
 check(new Set(codeMatches).size >= 3, `TROUBLESHOOTING must list at least 3 E_RFQ_* codes, got ${new Set(codeMatches).size}`)
