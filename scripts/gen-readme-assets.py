@@ -379,7 +379,7 @@ def draw_hero_panel(img: Image.Image, d: ImageDraw.ImageDraw, th: dict, lang: st
     d.rounded_rectangle((830, 476, 864, 500), radius=12, fill=th["green"])
     d.text((847, 489), "R1", font=font(FONT_MONO_BOLD, 11.5),
            fill="#ffffff", anchor="mm")
-    d.text((874, 488), "rfq.export → exports/rfq-compare.csv",
+    d.text((874, 488), "rfq_export → exports/rfq-compare.csv",
            font=font(FONT_MONO, 12), fill=th["text"], anchor="ls")
     d.text((874, 502), "4 rows · 895 B · sha256 14862e9b…",
            font=font(FONT_MONO, 11.5), fill=th["sub"], anchor="ls")
@@ -518,9 +518,9 @@ def flow_svg(skin: str) -> str:
         'aria-label="dsh-rfq-compare comparison chain">')
     parts.append('<title>dsh-rfq-compare comparison chain</title>')
     parts.append(
-        '<desc>CSV and JSON quotes enter rfq.ingest, normalize to integer cents, '
+        '<desc>CSV and JSON quotes enter rfq_ingest, normalize to integer cents, '
         'rank into a material by supplier score matrix, carry three advisory '
-        'anomaly flags, then rfq.export writes a local CSV with sha256.</desc>')
+        'anomaly flags, then rfq_export writes a local CSV with sha256.</desc>')
     parts.append('<defs>')
     parts.append(
         f'<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">'
@@ -610,7 +610,7 @@ def flow_svg(skin: str) -> str:
     # tool spine
     parts.append(svg_rect(318, 180, 112, 98, p["card"], p["border"], rx=18,
                           sw=1, filt="soft"))
-    parts.append(svg_text(332, 208, "rfq.ingest", 13.5, p["family"], 700, "mono"))
+    parts.append(svg_text(332, 208, "rfq_ingest", 13.5, p["family"], 700, "mono"))
     parts.append(svg_text(332, 230, "validate fields", 11.5, p["sub"]))
     parts.append(svg_text(332, 248, "integer cents", 11.5, p["sub"]))
     parts.append(svg_text(332, 266, "Q001… · R0", 11.5, p["sub"]))
@@ -623,7 +623,7 @@ def flow_svg(skin: str) -> str:
 
     parts.append(svg_rect(318, 384, 112, 110, p["card"], p["border"], rx=18,
                           sw=1, filt="soft"))
-    parts.append(svg_text(332, 412, "rfq.compare", 13.5, p["family"], 700, "mono"))
+    parts.append(svg_text(332, 412, "rfq_compare", 13.5, p["family"], 700, "mono"))
     parts.append(svg_text(332, 434, "group by material", 11.5, p["sub"]))
     parts.append(svg_text(332, 452, "× FX bp → CNY", 11.5, p["sub"]))
     parts.append(svg_text(332, 470, "sort · rank 1/2/3", 11.5, p["sub"]))
@@ -711,7 +711,7 @@ def flow_svg(skin: str) -> str:
                           700, spacing=.8))
     parts.append(svg_rect(990, 422, 48, 22, p["green"], rx=11, sw=0))
     parts.append(svg_text(1014, 437, "R1", 11, "#ffffff", 700, "mono", "middle"))
-    parts.append(svg_text(874, 462, "rfq.export", 15, p["text"], 700, "mono"))
+    parts.append(svg_text(874, 462, "rfq_export", 15, p["text"], 700, "mono"))
     parts.append(svg_text(874, 482, "$DSH_HOME/…/exports/", 11, p["sub"], 400, "mono"))
     parts.append(svg_text(874, 502, "rfq-compare.csv", 12.5, p["text"], 700, "mono"))
     parts.append(svg_text(874, 522, "4 rows · 895 B", 11.5, p["sub"]))

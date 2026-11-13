@@ -22,7 +22,7 @@ interface HumanMessage {
 const RFQ_HUMAN: Record<RfqErrorCode, HumanMessage> = {
   E_RFQ_EMPTY: {
     text: '没有可用的报价行，比价表是空的',
-    next: '至少导入一条报价（CSV 表头下要有数据行），再运行 rfq.compare 或 rfq.export',
+    next: '至少导入一条报价（CSV 表头下要有数据行），再运行 rfq_compare 或 rfq_export',
   },
   E_RFQ_CSV: {
     text: '这份报价 CSV 读不懂：表头缺列、列数对不上或引号没有闭合',

@@ -44,7 +44,7 @@ Un material, tres proveedores, tres precios: puede haber CNY, USD y EUR mezclado
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-v5-dark.svg">
-  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="Cadena de comparación de dsh-rfq-compare: los canales CSV y JSON entran en rfq.ingest, se normalizan a céntimos enteros, se ordenan en una matriz material × proveedor, reciben tres marcas de anomalía y rfq.export escribe un CSV local con sha256">
+  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="Cadena de comparación de dsh-rfq-compare: los canales CSV y JSON entran en rfq_ingest, se normalizan a céntimos enteros, se ordenan en una matriz material × proveedor, reciben tres marcas de anomalía y rfq_export escribe un CSV local con sha256">
 </picture>
 
 <sub>Dos canales de cotizaciones → céntimos enteros → matriz de puntuación por material → CSV local; las anomalías son marcas, no descalificaciones, y los archivos de entrada quedan en solo lectura.</sub>
@@ -90,9 +90,9 @@ Un material, tres proveedores, tres precios: puede haber CNY, USD y EUR mezclado
 - **Céntimos enteros** — internamente todo importe es un entero de céntimos (`1234` = 12.34), así que el coma flotante nunca entra en la comparación; si el origen solo tiene unidades mayores, `unit_price: 12.34` se convierte de forma exacta.
 - **Tipo de cambio marcador, sustituible** — `CNY 1.00 / USD 7.20 / EUR 7.80` es un valor fijo que hace reproducible la comparación entre monedas; el tipo del día se pasa en `fx_rates`. No hay cotización en vivo.
 - **Tres clases de anomalía como marcas** — por debajo del coste, por encima del presupuesto y caducada son **marcas**, no una descalificación: las cotizaciones marcadas siguen participando en el orden y decide una persona.
-- **Exportación CSV revisable** — `rfq.export` escribe una fila por material en `$DSH_HOME/dsh-rfq-compare/exports/` y devuelve la ruta, el `sha256`, el número de filas y de bytes; el archivo de cotizaciones original es de solo lectura.
+- **Exportación CSV revisable** — `rfq_export` escribe una fila por material en `$DSH_HOME/dsh-rfq-compare/exports/` y devuelve la ruta, el `sha256`, el número de filas y de bytes; el archivo de cotizaciones original es de solo lectura.
 - **Ids de cotización y códigos de error estables** — la importación asigna ids `Q001`… estables; todo fallo es un código `E_RFQ_*` estable y nunca se traga en silencio.
-- **Etiquetas de riesgo R0 / R1** — `rfq.ingest` y `rfq.compare` son R0 (archivos de solo lectura + estado en el proceso); solo `rfq.export` es R1 (escritura local).
+- **Etiquetas de riesgo R0 / R1** — `rfq_ingest` y `rfq_compare` son R0 (archivos de solo lectura + estado en el proceso); solo `rfq_export` es R1 (escritura local).
 
 ## Entrada
 
@@ -104,13 +104,13 @@ Un material, tres proveedores, tres precios: puede haber CNY, USD y EUR mezclado
 
 ## Salida
 
-- `rfq.ingest`: `{ added, updated, total, quotes[] }`, cada cotización con un `quote_id` estable (`Q001`…).
-- `rfq.compare`: resultado por material con
+- `rfq_ingest`: `{ added, updated, total, quotes[] }`, cada cotización con un `quote_id` estable (`Q001`…).
+- `rfq_compare`: resultado por material con
   - `lowest` / `second_lowest` (normalizados a CNY; a igualdad, plazo más corto),
   - `price_spread_cents` / `price_spread_bp`,
   - `lead_time_days: { min, max }`, `supplier_count` y el `rank` de cada cotización,
   - `anomalies.below_cost[]` / `anomalies.over_budget` / `anomalies.expired[]`.
-- `rfq.export`: una fila CSV por material escrita en `$DSH_HOME/dsh-rfq-compare/exports/`, devolviendo ruta, `sha256`, número de filas y de bytes. El archivo de cotizaciones original es de solo lectura.
+- `rfq_export`: una fila CSV por material escrita en `$DSH_HOME/dsh-rfq-compare/exports/`, devolviendo ruta, `sha256`, número de filas y de bytes. El archivo de cotizaciones original es de solo lectura.
 
 ## Reglas de comparación
 
@@ -128,9 +128,9 @@ Los nombres de herramienta son API estable; las descripciones se mantienen en in
 
 | Herramienta | Propósito | Riesgo |
 |---|---|---|
-| `rfq.ingest` | Importa cotizaciones desde CSV o JSON; sustituye proveedor+material; valida moneda/cantidad/precio/fecha | R0 |
-| `rfq.compare` | Por material: mínimo, segundo, diferencia, plazo, cambio marcador y las tres clases de anomalía | R0 |
-| `rfq.export` | Escribe el CSV de comparación con `safeExportPath`; devuelve ruta + sha256 | R1 escritura local |
+| `rfq_ingest` | Importa cotizaciones desde CSV o JSON; sustituye proveedor+material; valida moneda/cantidad/precio/fecha | R0 |
+| `rfq_compare` | Por material: mínimo, segundo, diferencia, plazo, cambio marcador y las tres clases de anomalía | R0 |
+| `rfq_export` | Escribe el CSV de comparación con `safeExportPath`; devuelve ruta + sha256 | R1 escritura local |
 
 ### Cabecera del CSV de cotizaciones
 
@@ -146,14 +146,14 @@ Usa `unit_price_cents` (céntimos enteros) o `unit_price` (unidades mayores, com
 
 ```sh
 # 1) ingest
-#    tool: rfq.ingest({ csv_text: "..." })
-#    or:   rfq.ingest({ quotes: [{ supplier, material, qty, unit_price_cents, currency, lead_time_days, valid_until }] })
+#    tool: rfq_ingest({ csv_text: "..." })
+#    or:   rfq_ingest({ quotes: [{ supplier, material, qty, unit_price_cents, currency, lead_time_days, valid_until }] })
 
 # 2) compare con líneas de coste, presupuestos y as_of fijo
-#    tool: rfq.compare({ as_of: "2026-11-02", cost_lines: [...], budgets: [...] })
+#    tool: rfq_compare({ as_of: "2026-11-02", cost_lines: [...], budgets: [...] })
 
 # 3) export
-#    tool: rfq.export({ as_of: "2026-11-02", cost_lines: [...], budgets: [...], filename: "rfq-compare.csv" })
+#    tool: rfq_export({ as_of: "2026-11-02", cost_lines: [...], budgets: [...], filename: "rfq-compare.csv" })
 ```
 
 ## Ejemplo
@@ -195,7 +195,7 @@ Este plugin **no tiene claves de configuración en el perfil**: `cordis.patch.ym
 | `cost_lines` | Lo aporta quien llama | Línea de coste del material en céntimos CNY por unidad; debe venir de quien llama y nunca se infiere |
 | `budgets` | Lo aporta quien llama | Presupuesto del material en céntimos CNY para la cantidad cotizada, usado por la marca de sobrepresupuesto |
 | `fx_rates` | `CNY 1.00 / USD 7.20 / EUR 7.80` | Sustituye los tipos marcadores, p. ej. `{ "USD": 7.25 }` (CNY por una unidad extranjera) |
-| `filename` | — | Nombre del archivo de `rfq.export`, solo `[A-Za-z0-9._-]`; el directorio es fijo: `$DSH_HOME/dsh-rfq-compare/exports/` |
+| `filename` | — | Nombre del archivo de `rfq_export`, solo `[A-Za-z0-9._-]`; el directorio es fijo: `$DSH_HOME/dsh-rfq-compare/exports/` |
 | `DSH_HOME` | Lo inyecta el host | Raíz de escritura: `$DSH_HOME/dsh-rfq-compare/exports/` |
 | `DSH_RFQ_COMPARE_HOME` | Sin definir | Sustituye la raíz de escritura local (pruebas); por defecto es exactamente `$DSH_HOME/dsh-rfq-compare` |
 
@@ -204,13 +204,13 @@ Este plugin **no tiene claves de configuración en el perfil**: `cordis.patch.ym
 
 | Herramienta | Argumento | Obligatorio | Notas |
 |---|---|---|---|
-| `rfq.ingest` | `csv_text` | uno de dos | Texto CSV completo; cabecera en «Cabecera del CSV de cotizaciones» |
-| `rfq.ingest` | `quotes[]` | uno de dos | Array JSON de cotizaciones con los mismos campos que las columnas |
-| `rfq.compare` | `as_of` | no | `YYYY-MM-DD`, por defecto hoy (UTC) |
-| `rfq.compare` | `cost_lines[]` | no | Supuestos de línea de coste, céntimos CNY por unidad |
-| `rfq.compare` | `budgets[]` | no | Supuestos de presupuesto, céntimos CNY para la cantidad cotizada |
-| `rfq.compare` | `fx_rates` | no | Sustituciones de tipo de cambio; una moneda desconocida lanza `E_RFQ_CURRENCY` |
-| `rfq.export` | todo lo anterior + `filename` | no | Solo `[A-Za-z0-9._-]`; una ruta que se escapa lanza `E_RFQ_PATH_INVALID` / `E_RFQ_PATH_NOT_ALLOWED` |
+| `rfq_ingest` | `csv_text` | uno de dos | Texto CSV completo; cabecera en «Cabecera del CSV de cotizaciones» |
+| `rfq_ingest` | `quotes[]` | uno de dos | Array JSON de cotizaciones con los mismos campos que las columnas |
+| `rfq_compare` | `as_of` | no | `YYYY-MM-DD`, por defecto hoy (UTC) |
+| `rfq_compare` | `cost_lines[]` | no | Supuestos de línea de coste, céntimos CNY por unidad |
+| `rfq_compare` | `budgets[]` | no | Supuestos de presupuesto, céntimos CNY para la cantidad cotizada |
+| `rfq_compare` | `fx_rates` | no | Sustituciones de tipo de cambio; una moneda desconocida lanza `E_RFQ_CURRENCY` |
+| `rfq_export` | todo lo anterior + `filename` | no | Solo `[A-Za-z0-9._-]`; una ruta que se escapa lanza `E_RFQ_PATH_INVALID` / `E_RFQ_PATH_NOT_ALLOWED` |
 
 </details>
 
@@ -233,7 +233,7 @@ No. `CNY 1.00 / USD 7.20 / EUR 7.80` es un marcador fijo para que la comparació
 <details>
 <summary>¿Se guardan las cotizaciones?</summary>
 
-`rfq.ingest` solo actualiza una tabla en memoria del proceso; desaparece al terminar. Solo `rfq.export` escribe el CSV de comparación en `$DSH_HOME/dsh-rfq-compare/exports/`. El archivo de cotizaciones original es de solo lectura; guarda tu propia copia si necesitas las cotizaciones en bruto.
+`rfq_ingest` solo actualiza una tabla en memoria del proceso; desaparece al terminar. Solo `rfq_export` escribe el CSV de comparación en `$DSH_HOME/dsh-rfq-compare/exports/`. El archivo de cotizaciones original es de solo lectura; guarda tu propia copia si necesitas las cotizaciones en bruto.
 
 </details>
 
@@ -261,11 +261,11 @@ No. Solo lee los archivos de cotizaciones y supuestos que le indiques; solo escr
 ## Permisos y límites de seguridad
 
 - Lectura: el CSV/JSON de cotizaciones que le indiques y, opcionalmente, los supuestos de línea de coste y presupuesto (muestra: `samples/quickstart/input/quotes.csv`, `samples/quickstart/input/assumptions.json`); nada más.
-- Escritura: solo `rfq.export` escribe en `$DSH_HOME/dsh-rfq-compare/exports/`; `rfq.ingest` solo actualiza una tabla en memoria.
+- Escritura: solo `rfq_export` escribe en `$DSH_HOME/dsh-rfq-compare/exports/`; `rfq_ingest` solo actualiza una tabla en memoria.
 - Red: no.
 - Sistemas externos: ninguno. Sin API de tipos de cambio, sin llamada al modelo, sin subir cotizaciones.
 
-`rfq.ingest` y `rfq.compare` son **R0** (archivos de solo lectura + estado en el proceso); `rfq.export` es **R1** (escritura local bajo `$DSH_HOME/dsh-rfq-compare/exports/`). `DSH_RFQ_COMPARE_HOME` sustituye la raíz de escritura para las pruebas.
+`rfq_ingest` y `rfq_compare` son **R0** (archivos de solo lectura + estado en el proceso); `rfq_export` es **R1** (escritura local bajo `$DSH_HOME/dsh-rfq-compare/exports/`). `DSH_RFQ_COMPARE_HOME` sustituye la raíz de escritura para las pruebas.
 
 - **Entrada de solo lectura**: el archivo de cotizaciones original nunca se reescribe; guarda tu propia copia si necesitas archivarlo.
 - **Una sola superficie de escritura**: el único destino es `exports/`, y `safeExportPath` valida los nombres, de modo que las rutas que se escapan se rechazan.
@@ -278,7 +278,7 @@ No. Solo lee los archivos de cotizaciones y supuestos que le indiques; solo escr
 - Solo tipo de cambio marcador; sin flete, aranceles, impuestos, condiciones de pago, MOQ ni precios escalonados. Las conclusiones entre monedas son una primera pasada.
 - Sin conversión de unidades (piezas/cajas/kg); todas las cotizaciones de un material deben usar la misma unidad de medida.
 - Las líneas de coste y los presupuestos deben venir de quien llama; no se infiere ni se adivina nada.
-- Las cotizaciones solo viven en memoria; vuelve a ejecutar `rfq.ingest` tras un reinicio.
+- Las cotizaciones solo viven en memoria; vuelve a ejecutar `rfq_ingest` tras un reinicio.
 - El CSV de salida usa comillas RFC 4180; sin saneado de prefijos de fórmula de Excel. No abras CSV de origen desconocido directamente en Excel.
 - Solo archivos locales; sin red, sin llamada al modelo, sin subidas.
 - Solo muestras públicas/sintéticas; alpha/partial, not counted, no GA.
@@ -314,7 +314,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-Versión actual `0.1.0` · 36 pruebas (`node --test test/*.test.mjs`). La puerta de release es `pnpm gate`: primero metadatos y comprobaciones de README (`scripts/lint.mjs`), después aceptación (`scripts/acceptance.mjs`) y por último cada fila de `ACCEPTANCE.csv` debe tener `pass=true`.
+Versión actual `0.2.0` · 37 pruebas (`node --test test/*.test.mjs`). La puerta de release es `pnpm gate`: primero metadatos y comprobaciones de README (`scripts/lint.mjs`), después aceptación (`scripts/acceptance.mjs`) y por último cada fila de `ACCEPTANCE.csv` debe tener `pass=true`.
 
 Las imágenes del README se generan de forma programática con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (hero con Pillow + SVG escrito a mano): escribe `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` y `dsh-rfq-compare-flow-v5-{light,dark}.svg`, y se puede volver a ejecutar; este repo no tiene datos de benchmark, así que no se produce el gráfico de datos medidos.
 

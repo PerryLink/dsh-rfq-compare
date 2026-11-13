@@ -1,6 +1,6 @@
 {
   "name": "dsh-rfq-compare",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ingest supplier quotes, compare them per material, flag below-cost / over-budget / expired quotes and export a comparison CSV; amounts stay in integer cents.",
   "type": "module",
   "main": "./lib/plugin/index.js",

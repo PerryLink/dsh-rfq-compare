@@ -17,6 +17,6 @@
     "kind": "flow",
     "alt": "dsh-rfq-compare workflow diagram",
     "caption": "Pipeline diagram: local quotes CSV to integer cents, per-material comparison and a local CSV export; schematic, not test evidence.",
-    "image_sha256": "a58704273dcda753de92a6f580c6e2cb5aa071777ec5e2ef3540b43bf4ac7b11"
+    "image_sha256": "fc886c72788aed20066c8bcf66d034a1347dafa55c9fc7a1899f1127fa0b6362"
   }
 ]
