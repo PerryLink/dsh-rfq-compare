@@ -44,7 +44,7 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-v5-dark.svg">
-  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="dsh-rfq-compare तुलना श्रृंखला: CSV और JSON कोटेशन चैनल rfq.ingest में आते हैं, पूर्णांक सेंट में सामान्य होते हैं, सामग्री × आपूर्तिकर्ता स्कोर मैट्रिक्स में क्रमबद्ध होते हैं, तीन सलाहकारी विसंगति चिह्न लेते हैं, और rfq.export sha256 वाली स्थानीय CSV लिखता है">
+  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="dsh-rfq-compare तुलना श्रृंखला: CSV और JSON कोटेशन चैनल rfq_ingest में आते हैं, पूर्णांक सेंट में सामान्य होते हैं, सामग्री × आपूर्तिकर्ता स्कोर मैट्रिक्स में क्रमबद्ध होते हैं, तीन सलाहकारी विसंगति चिह्न लेते हैं, और rfq_export sha256 वाली स्थानीय CSV लिखता है">
 </picture>
 
 <sub>दो कोटेशन चैनल → पूर्णांक सेंट → सामग्री स्कोर मैट्रिक्स → स्थानीय CSV; विसंगतियाँ केवल चिह्न हैं, स्वतः बाहर नहीं, और इनपुट फ़ाइलें केवल-पढ़ने योग्य रहती हैं।</sub>
@@ -90,9 +90,9 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 - **पूर्णांक सेंट** — अंदर हर राशि पूर्णांक सेंट है (`1234` = 12.34), इसलिए फ़्लोटिंग पॉइंट कभी तुलना में नहीं आता; स्रोत केवल बड़ी इकाइयाँ दे तो `unit_price: 12.34` ठीक-ठीक बदल जाता है।
 - **प्लेसहोल्डर विनिमय दर, बदली जा सकती है** — `CNY 1.00 / USD 7.20 / EUR 7.80` एक स्थिर मान है जो मुद्राओं के बीच तुलना को दोहराने योग्य बनाता है; दिन की दर `fx_rates` में दें। कोई लाइव रेट नहीं।
 - **तीन विसंगति श्रेणियाँ केवल चिह्न** — लागत से नीचे, बजट से ऊपर और अवधि समाप्त **चिह्न** हैं, स्वतः बहिष्कार नहीं: चिह्नित कोटेशन भी क्रम में रहते हैं और फ़ैसला इंसान करता है।
-- **जाँचने योग्य CSV निर्यात** — `rfq.export` हर सामग्री के लिए एक पंक्ति `$DSH_HOME/dsh-rfq-compare/exports/` में लिखता है और पथ, `sha256`, पंक्ति व बाइट संख्या लौटाता है; मूल कोटेशन फ़ाइल रीड-ओनली रहती है।
+- **जाँचने योग्य CSV निर्यात** — `rfq_export` हर सामग्री के लिए एक पंक्ति `$DSH_HOME/dsh-rfq-compare/exports/` में लिखता है और पथ, `sha256`, पंक्ति व बाइट संख्या लौटाता है; मूल कोटेशन फ़ाइल रीड-ओनली रहती है।
 - **स्थिर quote_id और त्रुटि कोड** — आयात स्थिर `Q001`… आईडी देता है; हर विफलता स्थिर `E_RFQ_*` कोड है, कभी चुपचाप नहीं निगली जाती।
-- **R0 / R1 जोखिम लेबल** — `rfq.ingest` और `rfq.compare` R0 हैं (रीड-ओनली फ़ाइलें + प्रोसेस स्थिति); केवल `rfq.export` R1 है (स्थानीय लेखन)।
+- **R0 / R1 जोखिम लेबल** — `rfq_ingest` और `rfq_compare` R0 हैं (रीड-ओनली फ़ाइलें + प्रोसेस स्थिति); केवल `rfq_export` R1 है (स्थानीय लेखन)।
 
 ## इनपुट
 
@@ -104,13 +104,13 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 
 ## आउटपुट
 
-- `rfq.ingest`: `{ added, updated, total, quotes[] }`, हर कोटेशन के साथ स्थिर `quote_id` (`Q001`…)।
-- `rfq.compare`: प्रति-सामग्री परिणाम जिसमें
+- `rfq_ingest`: `{ added, updated, total, quotes[] }`, हर कोटेशन के साथ स्थिर `quote_id` (`Q001`…)।
+- `rfq_compare`: प्रति-सामग्री परिणाम जिसमें
   - `lowest` / `second_lowest` (CNY में सामान्यीकृत; बराबरी पर कम लीड टाइम),
   - `price_spread_cents` / `price_spread_bp`,
   - `lead_time_days: { min, max }`, `supplier_count`, हर कोटेशन का `rank`,
   - `anomalies.below_cost[]` / `anomalies.over_budget` / `anomalies.expired[]`।
-- `rfq.export`: हर सामग्री के लिए एक CSV पंक्ति, `$DSH_HOME/dsh-rfq-compare/exports/` में लिखी जाती है; पथ, `sha256`, पंक्ति व बाइट संख्या लौटती है। मूल कोटेशन फ़ाइल रीड-ओनली है।
+- `rfq_export`: हर सामग्री के लिए एक CSV पंक्ति, `$DSH_HOME/dsh-rfq-compare/exports/` में लिखी जाती है; पथ, `sha256`, पंक्ति व बाइट संख्या लौटती है। मूल कोटेशन फ़ाइल रीड-ओनली है।
 
 ## तुलना के नियम
 
@@ -128,9 +128,9 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 
 | टूल | उद्देश्य | जोखिम |
 |---|---|---|
-| `rfq.ingest` | CSV या JSON से कोटेशन आयात; आपूर्तिकर्ता+सामग्री बदलें; मुद्रा/मात्रा/मूल्य/तिथि जाँचें | R0 |
-| `rfq.compare` | प्रति सामग्री: सबसे कम, दूसरा, अंतर, लीड टाइम, प्लेसहोल्डर FX और तीन विसंगति श्रेणियाँ | R0 |
-| `rfq.export` | `safeExportPath` से तुलना CSV लिखें; पथ + sha256 लौटाएँ | R1 स्थानीय लेखन |
+| `rfq_ingest` | CSV या JSON से कोटेशन आयात; आपूर्तिकर्ता+सामग्री बदलें; मुद्रा/मात्रा/मूल्य/तिथि जाँचें | R0 |
+| `rfq_compare` | प्रति सामग्री: सबसे कम, दूसरा, अंतर, लीड टाइम, प्लेसहोल्डर FX और तीन विसंगति श्रेणियाँ | R0 |
+| `rfq_export` | `safeExportPath` से तुलना CSV लिखें; पथ + sha256 लौटाएँ | R1 स्थानीय लेखन |
 
 ### कोटेशन CSV हेडर
 
@@ -146,14 +146,14 @@ DEMO-SUP-B,MAT-1001,100,17200,USD,21,2026-12-15,"USD quote, locked Q4"
 
 ```sh
 # 1) ingest
-#    tool: rfq.ingest({ csv_text: "..." })
-#    or:   rfq.ingest({ quotes: [{ supplier, material, qty, unit_price_cents, currency, lead_time_days, valid_until }] })
+#    tool: rfq_ingest({ csv_text: "..." })
+#    or:   rfq_ingest({ quotes: [{ supplier, material, qty, unit_price_cents, currency, lead_time_days, valid_until }] })
 
 # 2) लागत रेखाओं, बजट और स्थिर as_of के साथ compare
-#    tool: rfq.compare({ as_of: "2026-11-02", cost_lines: [...], budgets: [...] })
+#    tool: rfq_compare({ as_of: "2026-11-02", cost_lines: [...], budgets: [...] })
 
 # 3) export
-#    tool: rfq.export({ as_of: "2026-11-02", cost_lines: [...], budgets: [...], filename: "rfq-compare.csv" })
+#    tool: rfq_export({ as_of: "2026-11-02", cost_lines: [...], budgets: [...], filename: "rfq-compare.csv" })
 ```
 
 ## उदाहरण
@@ -195,7 +195,7 @@ node samples/quickstart/run.mjs --check
 | `cost_lines` | कॉलर देता है | सामग्री की लागत रेखा, प्रति इकाई CNY सेंट; यह कॉलर से ही आनी चाहिए, कभी अनुमान नहीं |
 | `budgets` | कॉलर देता है | कोट की गई मात्रा के लिए सामग्री बजट, CNY सेंट; बजट-पार चिह्न इसी से |
 | `fx_rates` | `CNY 1.00 / USD 7.20 / EUR 7.80` | प्लेसहोल्डर दरें बदलें, जैसे `{ "USD": 7.25 }` (एक विदेशी इकाई के लिए CNY) |
-| `filename` | — | `rfq.export` की फ़ाइल का नाम, केवल `[A-Za-z0-9._-]`; निर्देशिका निश्चित है: `$DSH_HOME/dsh-rfq-compare/exports/` |
+| `filename` | — | `rfq_export` की फ़ाइल का नाम, केवल `[A-Za-z0-9._-]`; निर्देशिका निश्चित है: `$DSH_HOME/dsh-rfq-compare/exports/` |
 | `DSH_HOME` | होस्ट देता है | लेखन रूट: `$DSH_HOME/dsh-rfq-compare/exports/` |
 | `DSH_RFQ_COMPARE_HOME` | सेट नहीं | स्थानीय लेखन रूट बदलें (परीक्षण); डिफ़ॉल्ट ठीक `$DSH_HOME/dsh-rfq-compare` |
 
@@ -204,13 +204,13 @@ node samples/quickstart/run.mjs --check
 
 | टूल | आर्ग्युमेंट | आवश्यक | टिप्पणी |
 |---|---|---|---|
-| `rfq.ingest` | `csv_text` | दो में से एक | पूरा CSV टेक्स्ट; हेडर «कोटेशन CSV हेडर» में |
-| `rfq.ingest` | `quotes[]` | दो में से एक | CSV स्तंभों जैसे फ़ील्ड्स वाला JSON कोटेशन ऐरे |
-| `rfq.compare` | `as_of` | नहीं | `YYYY-MM-DD`, डिफ़ॉल्ट आज (UTC) |
-| `rfq.compare` | `cost_lines[]` | नहीं | लागत-रेखा मान्यताएँ, प्रति इकाई CNY सेंट |
-| `rfq.compare` | `budgets[]` | नहीं | बजट मान्यताएँ, कोट की गई मात्रा के लिए CNY सेंट |
-| `rfq.compare` | `fx_rates` | नहीं | विनिमय दर बदलाव; अज्ञात मुद्रा कुंजी `E_RFQ_CURRENCY` देती है |
-| `rfq.export` | ऊपर के सभी + `filename` | नहीं | केवल `[A-Za-z0-9._-]`; पथ भागने पर `E_RFQ_PATH_INVALID` / `E_RFQ_PATH_NOT_ALLOWED` |
+| `rfq_ingest` | `csv_text` | दो में से एक | पूरा CSV टेक्स्ट; हेडर «कोटेशन CSV हेडर» में |
+| `rfq_ingest` | `quotes[]` | दो में से एक | CSV स्तंभों जैसे फ़ील्ड्स वाला JSON कोटेशन ऐरे |
+| `rfq_compare` | `as_of` | नहीं | `YYYY-MM-DD`, डिफ़ॉल्ट आज (UTC) |
+| `rfq_compare` | `cost_lines[]` | नहीं | लागत-रेखा मान्यताएँ, प्रति इकाई CNY सेंट |
+| `rfq_compare` | `budgets[]` | नहीं | बजट मान्यताएँ, कोट की गई मात्रा के लिए CNY सेंट |
+| `rfq_compare` | `fx_rates` | नहीं | विनिमय दर बदलाव; अज्ञात मुद्रा कुंजी `E_RFQ_CURRENCY` देती है |
+| `rfq_export` | ऊपर के सभी + `filename` | नहीं | केवल `[A-Za-z0-9._-]`; पथ भागने पर `E_RFQ_PATH_INVALID` / `E_RFQ_PATH_NOT_ALLOWED` |
 
 </details>
 
@@ -233,7 +233,7 @@ node samples/quickstart/run.mjs --check
 <details>
 <summary>क्या कोटेशन डिस्क पर सहेजे जाते हैं?</summary>
 
-`rfq.ingest` केवल प्रोसेस मेमोरी की तालिका बदलता है; प्रोसेस खत्म होते ही वह चली जाती है। केवल `rfq.export` तुलना CSV को `$DSH_HOME/dsh-rfq-compare/exports/` में लिखता है। मूल कोटेशन फ़ाइल रीड-ओनली है; कच्चे कोटेशन बाद में चाहिए तो अपनी प्रति रखें।
+`rfq_ingest` केवल प्रोसेस मेमोरी की तालिका बदलता है; प्रोसेस खत्म होते ही वह चली जाती है। केवल `rfq_export` तुलना CSV को `$DSH_HOME/dsh-rfq-compare/exports/` में लिखता है। मूल कोटेशन फ़ाइल रीड-ओनली है; कच्चे कोटेशन बाद में चाहिए तो अपनी प्रति रखें।
 
 </details>
 
@@ -261,11 +261,11 @@ CNY में सामान्यीकृत इकाई मूल्य क
 ## अनुमतियाँ और सुरक्षा सीमाएँ
 
 - पढ़ना: आपके बताए कोटेशन CSV/JSON और वैकल्पिक लागत-रेखा व बजट मान्यताएँ (सैंपल: `samples/quickstart/input/quotes.csv`, `samples/quickstart/input/assumptions.json`); और कुछ नहीं।
-- लिखना: केवल `rfq.export` `$DSH_HOME/dsh-rfq-compare/exports/` में लिखता है; `rfq.ingest` सिर्फ़ प्रोसेस मेमोरी तालिका बदलता है।
+- लिखना: केवल `rfq_export` `$DSH_HOME/dsh-rfq-compare/exports/` में लिखता है; `rfq_ingest` सिर्फ़ प्रोसेस मेमोरी तालिका बदलता है।
 - नेटवर्क: नहीं।
 - बाहरी सिस्टम: कोई नहीं। कोई FX API नहीं, कोई मॉडल कॉल नहीं, कोई कोटेशन अपलोड नहीं।
 
-`rfq.ingest` और `rfq.compare` **R0** हैं (रीड-ओनली फ़ाइलें + प्रोसेस स्थिति); `rfq.export` **R1** है (स्थानीय लेखन, `$DSH_HOME/dsh-rfq-compare/exports/` के अंदर)। `DSH_RFQ_COMPARE_HOME` परीक्षणों के लिए लेखन रूट बदलता है।
+`rfq_ingest` और `rfq_compare` **R0** हैं (रीड-ओनली फ़ाइलें + प्रोसेस स्थिति); `rfq_export` **R1** है (स्थानीय लेखन, `$DSH_HOME/dsh-rfq-compare/exports/` के अंदर)। `DSH_RFQ_COMPARE_HOME` परीक्षणों के लिए लेखन रूट बदलता है।
 
 - **इनपुट रीड-ओनली**: मूल कोटेशन फ़ाइल कभी दोबारा नहीं लिखी जाती; संग्रह के लिए अपनी प्रति रखें।
 - **एक ही लेखन सतह**: एकमात्र लक्ष्य `exports/` है, और `safeExportPath` नाम जाँचता है, इसलिए भागते पथ अस्वीकार होते हैं।
@@ -278,7 +278,7 @@ CNY में सामान्यीकृत इकाई मूल्य क
 - केवल प्लेसहोल्डर FX; भाड़ा, सीमा शुल्क, कर, भुगतान शर्तें, MOQ या स्तरीय मूल्य नहीं। मुद्राओं के बीच निष्कर्ष पहली छँटाई हैं।
 - कोई इकाई रूपांतरण नहीं (पीस/केस/किग्रा); एक सामग्री के सभी कोटेशन एक ही माप इकाई में होने चाहिए।
 - लागत रेखाएँ और बजट कॉलर से ही आने चाहिए; कुछ भी अनुमान या अटकल नहीं।
-- कोटेशन केवल मेमोरी में रहते हैं; रीस्टार्ट के बाद `rfq.ingest` फिर चलाएँ।
+- कोटेशन केवल मेमोरी में रहते हैं; रीस्टार्ट के बाद `rfq_ingest` फिर चलाएँ।
 - आउटपुट CSV RFC 4180 उद्धरण करता है; Excel फ़ॉर्मूला-प्रीफ़िक्स सफ़ाई नहीं। अविश्वसनीय CSV को सीधे Excel में न खोलें।
 - केवल स्थानीय फ़ाइलें; कोई नेटवर्क नहीं, कोई मॉडल कॉल नहीं, कोई अपलोड नहीं।
 - केवल सार्वजनिक/सिंथेटिक सैंपल; alpha/partial, not counted, GA नहीं।
@@ -314,7 +314,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-वर्तमान संस्करण `0.1.0` · 36 परीक्षण (`node --test test/*.test.mjs`)। रिलीज़ गेट `pnpm gate` है: पहले मेटाडेटा और README जाँच (`scripts/lint.mjs`), फिर स्वीकृति (`scripts/acceptance.mjs`), और अंत में `ACCEPTANCE.csv` की हर पंक्ति में `pass=true` होना चाहिए।
+वर्तमान संस्करण `0.2.0` · 37 परीक्षण (`node --test test/*.test.mjs`)। रिलीज़ गेट `pnpm gate` है: पहले मेटाडेटा और README जाँच (`scripts/lint.mjs`), फिर स्वीकृति (`scripts/acceptance.mjs`), और अंत में `ACCEPTANCE.csv` की हर पंक्ति में `pass=true` होना चाहिए।
 
 README की तस्वीरें [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow हीरो + हस्तलिखित SVG) से प्रोग्रामेटिक रूप से बनती हैं: `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` और `dsh-rfq-compare-flow-v5-{light,dark}.svg` लिखता है और दोबारा चलाया जा सकता है; इस रेपो में benchmark डेटा नहीं है, इसलिए मापे गए डेटा का चार्ट नहीं बनता।
 

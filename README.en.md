@@ -44,7 +44,7 @@ One material, three suppliers, three prices — possibly in CNY, USD and EUR, wi
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-v5-dark.svg">
-  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="dsh-rfq-compare comparison chain: CSV and JSON quote channels meet rfq.ingest, normalise to integer cents, rank into a material by supplier score matrix, carry three advisory anomaly flags, and write a local CSV with sha256 through rfq.export">
+  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="dsh-rfq-compare comparison chain: CSV and JSON quote channels meet rfq_ingest, normalise to integer cents, rank into a material by supplier score matrix, carry three advisory anomaly flags, and write a local CSV with sha256 through rfq_export">
 </picture>
 
 <sub>Dual quote channels → integer cents → material score matrix → local CSV artifact; anomalies are flags, never auto-rejections, and input files stay read-only.</sub>
@@ -90,9 +90,9 @@ One material, three suppliers, three prices — possibly in CNY, USD and EUR, wi
 - **Integer cents** — internally every amount is integer cents (`1234` = 12.34), so floating point never enters the comparison; a major-unit upstream can send `unit_price: 12.34` and it converts exactly.
 - **Placeholder FX, overridable** — `CNY 1.00 / USD 7.20 / EUR 7.80` is a fixed placeholder that makes cross-currency comparison reproducible; pass the day's rates through `fx_rates`. There is no live feed.
 - **Three anomaly classes as flags** — below cost line, over budget, and expired are **flags**, not automatic disqualification: flagged quotes still participate in ranking and a human decides.
-- **Reviewable CSV export** — `rfq.export` writes one row per material to `$DSH_HOME/dsh-rfq-compare/exports/` and returns the path, `sha256`, row and byte counts; the source quote file stays read-only.
+- **Reviewable CSV export** — `rfq_export` writes one row per material to `$DSH_HOME/dsh-rfq-compare/exports/` and returns the path, `sha256`, row and byte counts; the source quote file stays read-only.
 - **Stable quote ids and error codes** — import assigns stable `Q001`… ids; every failure is a stable `E_RFQ_*` code, never a silent swallow.
-- **R0 / R1 risk labels** — `rfq.ingest` and `rfq.compare` are R0 (read-only files plus in-process state); only `rfq.export` is R1 (local write).
+- **R0 / R1 risk labels** — `rfq_ingest` and `rfq_compare` are R0 (read-only files plus in-process state); only `rfq_export` is R1 (local write).
 
 ## Input
 
@@ -104,13 +104,13 @@ One material, three suppliers, three prices — possibly in CNY, USD and EUR, wi
 
 ## Output
 
-- `rfq.ingest`: `{ added, updated, total, quotes[] }`, each quote with a stable `quote_id` (`Q001`…).
-- `rfq.compare`: per-material result with
+- `rfq_ingest`: `{ added, updated, total, quotes[] }`, each quote with a stable `quote_id` (`Q001`…).
+- `rfq_compare`: per-material result with
   - `lowest` / `second_lowest` (normalized to CNY; ties by shorter lead time),
   - `price_spread_cents` / `price_spread_bp`,
   - `lead_time_days: { min, max }`, `supplier_count`, per-quote `rank`,
   - `anomalies.below_cost[]` / `anomalies.over_budget` / `anomalies.expired[]`.
-- `rfq.export`: one CSV row per material written to `$DSH_HOME/dsh-rfq-compare/exports/`, returning path, `sha256`, row and byte counts. The source quote file is read-only.
+- `rfq_export`: one CSV row per material written to `$DSH_HOME/dsh-rfq-compare/exports/`, returning path, `sha256`, row and byte counts. The source quote file is read-only.
 
 ## Comparison rules
 
@@ -128,9 +128,9 @@ Tool names are stable API; the descriptions stay English to match runtime output
 
 | Tool | Purpose | Risk |
 |---|---|---|
-| `rfq.ingest` | Import quotes from CSV or JSON; replace supplier+material; validate currency/qty/price/date | R0 |
-| `rfq.compare` | Per-material lowest, second, spread, lead time, placeholder FX and the three anomaly classes | R0 |
-| `rfq.export` | Write the comparison CSV via `safeExportPath`; return path + sha256 | R1 local write |
+| `rfq_ingest` | Import quotes from CSV or JSON; replace supplier+material; validate currency/qty/price/date | R0 |
+| `rfq_compare` | Per-material lowest, second, spread, lead time, placeholder FX and the three anomaly classes | R0 |
+| `rfq_export` | Write the comparison CSV via `safeExportPath`; return path + sha256 | R1 local write |
 
 ### Quote CSV header
 
@@ -146,14 +146,14 @@ Use either `unit_price_cents` (integer cents) or `unit_price` (major units, at m
 
 ```sh
 # 1) ingest
-#    tool: rfq.ingest({ csv_text: "..." })
-#    or:   rfq.ingest({ quotes: [{ supplier, material, qty, unit_price_cents, currency, lead_time_days, valid_until }] })
+#    tool: rfq_ingest({ csv_text: "..." })
+#    or:   rfq_ingest({ quotes: [{ supplier, material, qty, unit_price_cents, currency, lead_time_days, valid_until }] })
 
 # 2) compare with cost lines, budgets and a fixed as_of
-#    tool: rfq.compare({ as_of: "2026-11-02", cost_lines: [...], budgets: [...] })
+#    tool: rfq_compare({ as_of: "2026-11-02", cost_lines: [...], budgets: [...] })
 
 # 3) export
-#    tool: rfq.export({ as_of: "2026-11-02", cost_lines: [...], budgets: [...], filename: "rfq-compare.csv" })
+#    tool: rfq_export({ as_of: "2026-11-02", cost_lines: [...], budgets: [...], filename: "rfq-compare.csv" })
 ```
 
 ## Example
@@ -195,7 +195,7 @@ This plugin has **no profile config keys**: `cordis.patch.yml` only inserts one 
 | `cost_lines` | Caller-provided | Material cost line in CNY cents per unit; it must come from the caller and is never inferred |
 | `budgets` | Caller-provided | Material budget in CNY cents for the quoted quantity, used by the over-budget flag |
 | `fx_rates` | `CNY 1.00 / USD 7.20 / EUR 7.80` | Override the placeholder rates, e.g. `{ "USD": 7.25 }` (CNY per one foreign unit) |
-| `filename` | — | Export file name for `rfq.export`, `[A-Za-z0-9._-]` only; the directory is fixed at `$DSH_HOME/dsh-rfq-compare/exports/` |
+| `filename` | — | Export file name for `rfq_export`, `[A-Za-z0-9._-]` only; the directory is fixed at `$DSH_HOME/dsh-rfq-compare/exports/` |
 | `DSH_HOME` | Injected by the host | Write root: `$DSH_HOME/dsh-rfq-compare/exports/` |
 | `DSH_RFQ_COMPARE_HOME` | Unset | Override the local write root (tests); by default it is exactly `$DSH_HOME/dsh-rfq-compare` |
 
@@ -204,13 +204,13 @@ This plugin has **no profile config keys**: `cordis.patch.yml` only inserts one 
 
 | Tool | Argument | Required | Notes |
 |---|---|---|---|
-| `rfq.ingest` | `csv_text` | one of two | Whole CSV text; header in "Quote CSV header" |
-| `rfq.ingest` | `quotes[]` | one of two | JSON quote array with the same fields as the CSV columns |
-| `rfq.compare` | `as_of` | no | `YYYY-MM-DD`, defaults to today (UTC) |
-| `rfq.compare` | `cost_lines[]` | no | Cost-line assumptions, CNY cents per unit |
-| `rfq.compare` | `budgets[]` | no | Budget assumptions, CNY cents for the quoted quantity |
-| `rfq.compare` | `fx_rates` | no | FX overrides; an unknown currency key raises `E_RFQ_CURRENCY` |
-| `rfq.export` | all of the above + `filename` | no | `[A-Za-z0-9._-]` only; path escapes raise `E_RFQ_PATH_INVALID` / `E_RFQ_PATH_NOT_ALLOWED` |
+| `rfq_ingest` | `csv_text` | one of two | Whole CSV text; header in "Quote CSV header" |
+| `rfq_ingest` | `quotes[]` | one of two | JSON quote array with the same fields as the CSV columns |
+| `rfq_compare` | `as_of` | no | `YYYY-MM-DD`, defaults to today (UTC) |
+| `rfq_compare` | `cost_lines[]` | no | Cost-line assumptions, CNY cents per unit |
+| `rfq_compare` | `budgets[]` | no | Budget assumptions, CNY cents for the quoted quantity |
+| `rfq_compare` | `fx_rates` | no | FX overrides; an unknown currency key raises `E_RFQ_CURRENCY` |
+| `rfq_export` | all of the above + `filename` | no | `[A-Za-z0-9._-]` only; path escapes raise `E_RFQ_PATH_INVALID` / `E_RFQ_PATH_NOT_ALLOWED` |
 
 </details>
 
@@ -233,7 +233,7 @@ No. `CNY 1.00 / USD 7.20 / EUR 7.80` is a fixed placeholder so a cross-currency 
 <details>
 <summary>Are quotes persisted?</summary>
 
-`rfq.ingest` only updates an in-process table; it disappears when the process ends. Only `rfq.export` writes the comparison CSV to `$DSH_HOME/dsh-rfq-compare/exports/`. The original quote file is read-only; keep your own copy if you need the raw quotes later.
+`rfq_ingest` only updates an in-process table; it disappears when the process ends. Only `rfq_export` writes the comparison CSV to `$DSH_HOME/dsh-rfq-compare/exports/`. The original quote file is read-only; keep your own copy if you need the raw quotes later.
 
 </details>
 
@@ -261,11 +261,11 @@ No. It reads only the quote/assumption files you point it at; it writes only to 
 ## Permissions & security boundaries
 
 - Read: the quote CSV/JSON you point it at, plus optional cost-line and budget assumptions (sample: `samples/quickstart/input/quotes.csv`, `samples/quickstart/input/assumptions.json`); nothing else.
-- Write: only `rfq.export` writes `$DSH_HOME/dsh-rfq-compare/exports/`; `rfq.ingest` only updates an in-process table.
+- Write: only `rfq_export` writes `$DSH_HOME/dsh-rfq-compare/exports/`; `rfq_ingest` only updates an in-process table.
 - Network: no.
 - External systems: none. No FX API, no model call, no upload.
 
-`rfq.ingest` and `rfq.compare` are **R0** (read-only files + in-process state); `rfq.export` is **R1** (local write under `$DSH_HOME/dsh-rfq-compare/exports/`). `DSH_RFQ_COMPARE_HOME` overrides the write root for tests.
+`rfq_ingest` and `rfq_compare` are **R0** (read-only files + in-process state); `rfq_export` is **R1** (local write under `$DSH_HOME/dsh-rfq-compare/exports/`). `DSH_RFQ_COMPARE_HOME` overrides the write root for tests.
 
 - **Read-only input**: the original quote file is never rewritten; save your own copy if you need to archive it.
 - **Single write surface**: the only write target is `exports/`, and file names are checked by `safeExportPath` so path escapes are rejected.
@@ -278,7 +278,7 @@ No. It reads only the quote/assumption files you point it at; it writes only to 
 - Placeholder FX only; no freight, duty, tax, payment terms, MOQ or tiered pricing. Cross-currency conclusions are a first pass.
 - No unit conversion (pieces/cases/kg); all quotes for one material must use the same unit of measure.
 - Cost lines and budgets must come from the caller; nothing is inferred or guessed.
-- Quotes live in memory only; re-run `rfq.ingest` after a restart.
+- Quotes live in memory only; re-run `rfq_ingest` after a restart.
 - CSV output is RFC 4180 quoted; no Excel formula-prefix sanitisation. Do not open untrusted CSV directly in Excel.
 - Local files only; no network, no model call, no upload.
 - Public/synthetic samples only; alpha/partial, not counted, not GA.
@@ -314,7 +314,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-Current version `0.1.0` · 36 tests (`node --test test/*.test.mjs`). The release gate is `pnpm gate`: metadata and README checks first (`scripts/lint.mjs`), then acceptance (`scripts/acceptance.mjs`), then every `ACCEPTANCE.csv` row must have `pass=true`.
+Current version `0.2.0` · 37 tests (`node --test test/*.test.mjs`). The release gate is `pnpm gate`: metadata and README checks first (`scripts/lint.mjs`), then acceptance (`scripts/acceptance.mjs`), then every `ACCEPTANCE.csv` row must have `pass=true`.
 
 The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow hero + hand-written SVG): it writes `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` and `dsh-rfq-compare-flow-v5-{light,dark}.svg`, and is safe to re-run; this repo has no benchmark data, so no measured-data bar chart is produced.
 

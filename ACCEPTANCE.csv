@@ -1,17 +1,17 @@
 req_id,metric,threshold,actual,script,evidence_sha256,pass,source,counted
-RFQ-A01,ingest 12 quotes,added=12 total=12,added=12 total=12,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A02,compare 4 materials,4/12/3,4/12/3,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A03,lowest/second/spread,Q002/Q001/1160,Q002/Q001/1160,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A04,placeholder FX,USD 17200 -> 123840,USD17200=123840,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A05,below cost line,2,2,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A06,over budget,2,2,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A07,expired quotes,2,2,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A08,bad currency,E_RFQ_CURRENCY,E_RFQ_CURRENCY,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A09,zero qty,E_RFQ_QTY,E_RFQ_QTY,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A10,empty quote table,E_RFQ_EMPTY,E_RFQ_EMPTY,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A11,bad CSV header,E_RFQ_CSV,E_RFQ_CSV,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A12,fractional cents,E_RFQ_PRICE,E_RFQ_PRICE,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A13,invalid date,E_RFQ_DATE,E_RFQ_DATE,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A14,CSV export,4 rows + sha256,4 rows/14862e9b3dac,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
-RFQ-A15,export path safety,traversal rejected,E_RFQ_PATH_INVALID,scripts/acceptance.mjs,c8f1caae2604f6efb33f3a2a0dfc74e3882726a5350c3cbffbc48440e5ccf551,true,public/synthetic,false
+RFQ-A01,ingest 12 quotes,added=12 total=12,added=12 total=12,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A02,compare 4 materials,4/12/3,4/12/3,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A03,lowest/second/spread,Q002/Q001/1160,Q002/Q001/1160,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A04,placeholder FX,USD 17200 -> 123840,USD17200=123840,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A05,below cost line,2,2,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A06,over budget,2,2,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A07,expired quotes,2,2,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A08,bad currency,E_RFQ_CURRENCY,E_RFQ_CURRENCY,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A09,zero qty,E_RFQ_QTY,E_RFQ_QTY,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A10,empty quote table,E_RFQ_EMPTY,E_RFQ_EMPTY,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A11,bad CSV header,E_RFQ_CSV,E_RFQ_CSV,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A12,fractional cents,E_RFQ_PRICE,E_RFQ_PRICE,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A13,invalid date,E_RFQ_DATE,E_RFQ_DATE,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A14,CSV export,4 rows + sha256,4 rows/14862e9b3dac,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
+RFQ-A15,export path safety,traversal rejected,E_RFQ_PATH_INVALID,scripts/acceptance.mjs,e09f9b47db5dc3781f3ab2c3d8e681c975a1062d6101bfbde56e45d6214af1cc,true,public/synthetic,false
 PS1-QS01,quickstart golden,1/1,1,samples/quickstart/run.mjs,4bb1bae8eabf94582fa1908c087fbe1a9dd9ca552567c54b733375d3a977fd0f,true,synthetic/quickstart,true

@@ -223,7 +223,7 @@ export function createTools(deps: ToolDeps) {
   const today = deps.today ?? (() => new Date().toISOString().slice(0, 10))
 
   const ingest = defineTool({
-    name: 'rfq.ingest',
+    name: 'rfq_ingest',
     description:
       'Import supplier quotes from a CSV body and/or a JSON array. One material may have several suppliers; re-importing the same supplier+material replaces it. Amounts are integer cents; currency is CNY/USD/EUR; quantity must be a positive integer.',
     parameters: {
@@ -274,7 +274,7 @@ export function createTools(deps: ToolDeps) {
   })
 
   const compare = defineTool({
-    name: 'rfq.compare',
+    name: 'rfq_compare',
     description:
       'Compare all stored quotes per material: lowest and second-lowest normalized unit price, spread, lead time, and three anomaly classes (below cost line, over budget, quote expired). FX uses a documented placeholder and can be overridden.',
     parameters: compareParameters,
@@ -297,9 +297,9 @@ export function createTools(deps: ToolDeps) {
   })
 
   const exportCsv = defineTool({
-    name: 'rfq.export',
+    name: 'rfq_export',
     description:
-      'Export the per-material comparison as one CSV under $DSH_HOME/dsh-rfq-compare/exports; returns path, sha256, row/byte counts and the anomaly summary. Same options as rfq.compare.',
+      'Export the per-material comparison as one CSV under $DSH_HOME/dsh-rfq-compare/exports; returns path, sha256, row/byte counts and the anomaly summary. Same options as rfq_compare.',
     parameters: {
       ...compareParameters,
       filename: { type: 'string', description: 'Safe single filename; defaults to rfq-compare-YYYYMMDD.csv.' },

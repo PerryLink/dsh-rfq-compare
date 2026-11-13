@@ -38,9 +38,9 @@ async function run() {
     const tools = Object.fromEntries(createTools({ baseDir: tempDir }).map((tool) => [tool.name, tool]))
     const exec = { callId: 'quickstart' }
 
-    const ingested = await tools['rfq.ingest'].execute({ csv_text: await readFile(samplePath, 'utf8') }, exec)
-    const compared = await tools['rfq.compare'].execute(options, exec)
-    const exported = await tools['rfq.export'].execute({ ...options, filename: 'rfq-compare.csv' }, exec)
+    const ingested = await tools['rfq_ingest'].execute({ csv_text: await readFile(samplePath, 'utf8') }, exec)
+    const compared = await tools['rfq_compare'].execute(options, exec)
+    const exported = await tools['rfq_export'].execute({ ...options, filename: 'rfq-compare.csv' }, exec)
     const csvText = await readFile(exported.path, 'utf8')
 
     return {

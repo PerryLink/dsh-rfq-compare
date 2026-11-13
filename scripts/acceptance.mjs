@@ -38,24 +38,24 @@ async function main() {
     const assumptions = JSON.parse(readFileSync(path.join(root, 'samples', 'quickstart', 'input', 'assumptions.json'), 'utf8'))
     const options = { as_of: assumptions.as_of, cost_lines: assumptions.cost_lines, budgets: assumptions.budgets }
 
-    const ingested = await tools['rfq.ingest'].execute({ csv_text: sample }, exec)
-    const compared = await tools['rfq.compare'].execute(options, exec)
-    const exported = await tools['rfq.export'].execute({ ...options, filename: 'acceptance.csv' }, exec)
+    const ingested = await tools['rfq_ingest'].execute({ csv_text: sample }, exec)
+    const compared = await tools['rfq_compare'].execute(options, exec)
+    const exported = await tools['rfq_export'].execute({ ...options, filename: 'acceptance.csv' }, exec)
     const csvText = readFileSync(exported.path, 'utf8')
     const first = compared.materials.find((material) => material.material === 'MAT-1001')
     const currencyCode = await errorCode(
-      tools['rfq.ingest'].execute({ quotes: [{ supplier: 'A', material: 'MAT-1', qty: 1, unit_price_cents: 1, currency: 'GBP', lead_time_days: 1, valid_until: '2026-12-31' }] }, exec),
+      tools['rfq_ingest'].execute({ quotes: [{ supplier: 'A', material: 'MAT-1', qty: 1, unit_price_cents: 1, currency: 'GBP', lead_time_days: 1, valid_until: '2026-12-31' }] }, exec),
     )
     const qtyCode = await errorCode(
-      tools['rfq.ingest'].execute({ quotes: [{ supplier: 'A', material: 'MAT-1', qty: 0, unit_price_cents: 1, currency: 'CNY', lead_time_days: 1, valid_until: '2026-12-31' }] }, exec),
+      tools['rfq_ingest'].execute({ quotes: [{ supplier: 'A', material: 'MAT-1', qty: 0, unit_price_cents: 1, currency: 'CNY', lead_time_days: 1, valid_until: '2026-12-31' }] }, exec),
     )
-    const emptyCode = await errorCode(tools['rfq.ingest'].execute({}, exec))
-    const csvCode = await errorCode(tools['rfq.ingest'].execute({ csv_text: 'supplier,material,qty\nA,B,1\n' }, exec))
+    const emptyCode = await errorCode(tools['rfq_ingest'].execute({}, exec))
+    const csvCode = await errorCode(tools['rfq_ingest'].execute({ csv_text: 'supplier,material,qty\nA,B,1\n' }, exec))
     const priceCode = await errorCode(
-      tools['rfq.ingest'].execute({ quotes: [{ supplier: 'A', material: 'MAT-1', qty: 1, unit_price_cents: 12.5, currency: 'CNY', lead_time_days: 1, valid_until: '2026-12-31' }] }, exec),
+      tools['rfq_ingest'].execute({ quotes: [{ supplier: 'A', material: 'MAT-1', qty: 1, unit_price_cents: 12.5, currency: 'CNY', lead_time_days: 1, valid_until: '2026-12-31' }] }, exec),
     )
     const dateCode = await errorCode(
-      tools['rfq.ingest'].execute({ quotes: [{ supplier: 'A', material: 'MAT-1', qty: 1, unit_price_cents: 1, currency: 'CNY', lead_time_days: 1, valid_until: '2026-02-30' }] }, exec),
+      tools['rfq_ingest'].execute({ quotes: [{ supplier: 'A', material: 'MAT-1', qty: 1, unit_price_cents: 1, currency: 'CNY', lead_time_days: 1, valid_until: '2026-02-30' }] }, exec),
     )
     const pathCode = await errorCode(safeExportPath(path.join(baseDir, 'exports'), '../evil.csv'))
     const csvOk =

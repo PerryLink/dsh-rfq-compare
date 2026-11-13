@@ -6,8 +6,8 @@
 ## 1. 报价表是空的（E_RFQ_EMPTY）
 
 - **症状**：`没有可用的报价行，比价表是空的（E_RFQ_EMPTY）｜下一步：至少导入一条报价...`
-- **原因**：CSV 只有表头没有数据行；或者 `rfq.ingest` 既没传 `csv_text` 也没传 `quotes`；或者在空表上直接跑了 `rfq.compare` / `rfq.export`。
-- **动作**：确认 CSV 表头下面至少有一行报价；先 `rfq.ingest` 再 `rfq.compare`；换文件后重新导入。
+- **原因**：CSV 只有表头没有数据行；或者 `rfq_ingest` 既没传 `csv_text` 也没传 `quotes`；或者在空表上直接跑了 `rfq_compare` / `rfq_export`。
+- **动作**：确认 CSV 表头下面至少有一行报价；先 `rfq_ingest` 再 `rfq_compare`；换文件后重新导入。
 
 ## 2. 数量不合法（E_RFQ_QTY）
 
@@ -66,4 +66,4 @@ node scripts/gate.mjs                     # 元数据 + 验收门
 ```
 
 仍失败时请在 <https://github.com/PerryLink/dsh-rfq-compare/issues> 附上：包版本、最小合成 CSV（或生成脚本）、
-`rfq.ingest` / `rfq.compare` 的完整报错行、Node 与 DSH 版本。**不要附真实供应商报价或客户价格。**
+`rfq_ingest` / `rfq_compare` 的完整报错行、Node 与 DSH 版本。**不要附真实供应商报价或客户价格。**

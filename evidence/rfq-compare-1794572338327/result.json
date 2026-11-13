@@ -1,0 +1,115 @@
+{
+  "run_id": "rfq-compare-1794572338327",
+  "scope": "RFQ-COMPARE-S1",
+  "status": "pass",
+  "counted": false,
+  "note": "synthetic quotes only; no customer data, no network, FX is a documented placeholder",
+  "metrics": [
+    {
+      "req_id": "RFQ-A01",
+      "metric": "ingest 12 quotes",
+      "threshold": "added=12 total=12",
+      "actual": "added=12 total=12",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A02",
+      "metric": "compare 4 materials",
+      "threshold": "4/12/3",
+      "actual": "4/12/3",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A03",
+      "metric": "lowest/second/spread",
+      "threshold": "Q002/Q001/1160",
+      "actual": "Q002/Q001/1160",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A04",
+      "metric": "placeholder FX",
+      "threshold": "USD 17200 -> 123840",
+      "actual": "USD17200=123840",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A05",
+      "metric": "below cost line",
+      "threshold": "2",
+      "actual": "2",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A06",
+      "metric": "over budget",
+      "threshold": "2",
+      "actual": "2",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A07",
+      "metric": "expired quotes",
+      "threshold": "2",
+      "actual": "2",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A08",
+      "metric": "bad currency",
+      "threshold": "E_RFQ_CURRENCY",
+      "actual": "E_RFQ_CURRENCY",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A09",
+      "metric": "zero qty",
+      "threshold": "E_RFQ_QTY",
+      "actual": "E_RFQ_QTY",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A10",
+      "metric": "empty quote table",
+      "threshold": "E_RFQ_EMPTY",
+      "actual": "E_RFQ_EMPTY",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A11",
+      "metric": "bad CSV header",
+      "threshold": "E_RFQ_CSV",
+      "actual": "E_RFQ_CSV",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A12",
+      "metric": "fractional cents",
+      "threshold": "E_RFQ_PRICE",
+      "actual": "E_RFQ_PRICE",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A13",
+      "metric": "invalid date",
+      "threshold": "E_RFQ_DATE",
+      "actual": "E_RFQ_DATE",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A14",
+      "metric": "CSV export",
+      "threshold": "4 rows + sha256",
+      "actual": "4 rows/14862e9b3dac",
+      "pass": true
+    },
+    {
+      "req_id": "RFQ-A15",
+      "metric": "export path safety",
+      "threshold": "traversal rejected",
+      "actual": "E_RFQ_PATH_INVALID",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

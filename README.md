@@ -44,7 +44,7 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-rfq-compare-flow-v5-dark.svg">
-  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="dsh-rfq-compare 比价链路：CSV 与 JSON 双通道汇入 rfq.ingest，金额统一为整数分，按物料×供应商排成记分矩阵，三类异常进入只标记不淘汰的边界侧栏，最后由 rfq.export 写出带 sha256 的本地 CSV">
+  <img src="docs/assets/dsh-rfq-compare-flow-v5-light.svg" width="100%" alt="dsh-rfq-compare 比价链路：CSV 与 JSON 双通道汇入 rfq_ingest，金额统一为整数分，按物料×供应商排成记分矩阵，三类异常进入只标记不淘汰的边界侧栏，最后由 rfq_export 写出带 sha256 的本地 CSV">
 </picture>
 
 <sub>双通道报价 → 整数分归一 → 物料记分矩阵 → 本地 CSV 凭证；异常只标记、不自动淘汰，输入文件只读。</sub>
@@ -90,9 +90,9 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 - **整数分金额** —— 内部一律整数分（`1234` = 12.34），避免浮点误差；只给「元」的上游可以用 `unit_price: 12.34` 精确换算。
 - **占位汇率、可覆盖** —— `CNY 1.00 / USD 7.20 / EUR 7.80` 是写死的占位汇率，只为让跨币种比价可复现；当天汇率用 `fx_rates` 传入，不做实时行情。
 - **三类异常标记** —— 低于成本线、超预算、有效期已过都只是**标记**，报价仍然参与排序，由采购人员决定是否剔除。
-- **可复核的 CSV 导出** —— `rfq.export` 每个物料一行，写到 `$DSH_HOME/dsh-rfq-compare/exports/`，返回路径、`sha256`、行数与字节数；原报价文件只读。
+- **可复核的 CSV 导出** —— `rfq_export` 每个物料一行，写到 `$DSH_HOME/dsh-rfq-compare/exports/`，返回路径、`sha256`、行数与字节数；原报价文件只读。
 - **稳定 quote_id 与错误码** —— 导入即分配 `Q001`… 的稳定编号；错误一律是 `E_RFQ_*` 稳定码，不静默吞掉。
-- **R0 / R1 风险分级** —— `rfq.ingest`、`rfq.compare` 是 R0（只读文件 + 进程内状态）；只有 `rfq.export` 是 R1（本地写）。
+- **R0 / R1 风险分级** —— `rfq_ingest`、`rfq_compare` 是 R0（只读文件 + 进程内状态）；只有 `rfq_export` 是 R1（本地写）。
 
 ## 输入
 
@@ -104,17 +104,17 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 
 ## 输出
 
-- `rfq.ingest`：`{ added, updated, total, quotes[] }`，每条报价带稳定的 `quote_id`（`Q001`…）。
-- `rfq.compare`：按物料排序的比价结果，每个物料含：
+- `rfq_ingest`：`{ added, updated, total, quotes[] }`，每条报价带稳定的 `quote_id`（`Q001`…）。
+- `rfq_compare`：按物料排序的比价结果，每个物料含：
   - `lowest` / `second_lowest`：按**折算成 CNY 后的单价**排序，同价时交期短的优先；
   - `price_spread_cents` / `price_spread_bp`：最低价与次低价的差额（分与基点）；
   - `lead_time_days: { min, max }`、`supplier_count`、全部报价的 `rank`；
   - `anomalies.below_cost[]`、`anomalies.over_budget`、`anomalies.expired[]`。
-- `rfq.export`：一张 CSV（每个物料一行），写到 `$DSH_HOME/dsh-rfq-compare/exports/`，返回路径、`sha256`、行数与字节数。原报价文件只读，不会被修改。
+- `rfq_export`：一张 CSV（每个物料一行），写到 `$DSH_HOME/dsh-rfq-compare/exports/`，返回路径、`sha256`、行数与字节数。原报价文件只读，不会被修改。
 
 ## 比价规则
 
-1. **统一到 CNY 再排序**：`unit_price_cents × 汇率基点 ÷ 10000`，四舍五入到整数分。占位汇率是 `CNY 1.00 / USD 7.20 / EUR 7.80`，只用于演示；要换成自己的汇率，在 `rfq.compare` / `rfq.export` 里传 `fx_rates: { "USD": 7.25 }`。
+1. **统一到 CNY 再排序**：`unit_price_cents × 汇率基点 ÷ 10000`，四舍五入到整数分。占位汇率是 `CNY 1.00 / USD 7.20 / EUR 7.80`，只用于演示；要换成自己的汇率，在 `rfq_compare` / `rfq_export` 里传 `fx_rates: { "USD": 7.25 }`。
 2. **最低价 = 折算后单价最低**；同价时交期短的排前面，再按供应商名稳定排序。**次低价**是排序后的第二条。
 3. **价差** = 次低价 − 最低价（分）；**价差基点** = 价差 ÷ 最低价 × 10000。
 4. **低于成本线**：某条报价的折算单价 < `cost_lines` 里该物料的成本线，逐条列出差额。
@@ -128,9 +128,9 @@ dsh plugin --profile <profile> add dsh-rfq-compare
 
 | 工具 | 用途 | 风险 |
 |---|---|---|
-| `rfq.ingest` | 从 CSV 或 JSON 导入报价；同一供应商+物料替换；校验币种/数量/单价/日期 | R0 |
-| `rfq.compare` | 按物料输出最低价、次低价、价差、交期、占位汇率换算与三类异常 | R0 |
-| `rfq.export` | 把比价结果写成 CSV（`safeExportPath`），返回路径与 sha256 | R1 local write |
+| `rfq_ingest` | 从 CSV 或 JSON 导入报价；同一供应商+物料替换；校验币种/数量/单价/日期 | R0 |
+| `rfq_compare` | 按物料输出最低价、次低价、价差、交期、占位汇率换算与三类异常 | R0 |
+| `rfq_export` | 把比价结果写成 CSV（`safeExportPath`），返回路径与 sha256 | R1 local write |
 
 ### 报价 CSV 表头
 
@@ -146,14 +146,14 @@ DEMO-SUP-B,MAT-1001,100,17200,USD,21,2026-12-15,"USD quote, locked Q4"
 
 ```sh
 # 1) 导入报价
-#    工具面：rfq.ingest({ csv_text: "..." })
-#    或：rfq.ingest({ quotes: [{ supplier, material, qty, unit_price_cents, currency, lead_time_days, valid_until }] })
+#    工具面：rfq_ingest({ csv_text: "..." })
+#    或：rfq_ingest({ quotes: [{ supplier, material, qty, unit_price_cents, currency, lead_time_days, valid_until }] })
 
 # 2) 比价（带成本线、预算与固定日期）
-#    工具面：rfq.compare({ as_of: "2026-11-02", cost_lines: [...], budgets: [...] })
+#    工具面：rfq_compare({ as_of: "2026-11-02", cost_lines: [...], budgets: [...] })
 
 # 3) 导出 CSV
-#    工具面：rfq.export({ as_of: "2026-11-02", cost_lines: [...], budgets: [...], filename: "rfq-compare.csv" })
+#    工具面：rfq_export({ as_of: "2026-11-02", cost_lines: [...], budgets: [...], filename: "rfq-compare.csv" })
 ```
 
 ## 示例
@@ -195,7 +195,7 @@ node samples/quickstart/run.mjs --check
 | `cost_lines` | 使用者提供 | 物料成本线（CNY 分/件）；必须由使用者提供，本包不猜、不从历史数据推断 |
 | `budgets` | 使用者提供 | 物料预算（CNY 分/该数量），用于「超预算」标记 |
 | `fx_rates` | `CNY 1.00 / USD 7.20 / EUR 7.80` | 覆盖占位汇率，形如 `{ "USD": 7.25 }`（1 单位外币 = 多少 CNY） |
-| `filename` | — | `rfq.export` 的导出文件名，只允许 `[A-Za-z0-9._-]`；目录固定为 `$DSH_HOME/dsh-rfq-compare/exports/` |
+| `filename` | — | `rfq_export` 的导出文件名，只允许 `[A-Za-z0-9._-]`；目录固定为 `$DSH_HOME/dsh-rfq-compare/exports/` |
 | `DSH_HOME` | 宿主注入 | 写根：`$DSH_HOME/dsh-rfq-compare/exports/` |
 | `DSH_RFQ_COMPARE_HOME` | 未设置 | 覆盖本地写根（测试用），默认严格等于 `$DSH_HOME/dsh-rfq-compare` |
 
@@ -204,13 +204,13 @@ node samples/quickstart/run.mjs --check
 
 | 工具 | 入参 | 必填 | 说明 |
 |---|---|---|---|
-| `rfq.ingest` | `csv_text` | 二选一 | 整段 CSV 文本，表头见「报价 CSV 表头」 |
-| `rfq.ingest` | `quotes[]` | 二选一 | JSON 报价数组，字段与 CSV 列一致 |
-| `rfq.compare` | `as_of` | 否 | `YYYY-MM-DD`，默认今天（UTC） |
-| `rfq.compare` | `cost_lines[]` | 否 | 成本线假设，CNY 分/件 |
-| `rfq.compare` | `budgets[]` | 否 | 预算假设，CNY 分/该数量 |
-| `rfq.compare` | `fx_rates` | 否 | 汇率覆盖，未知币种键会报 `E_RFQ_CURRENCY` |
-| `rfq.export` | 上述全部 + `filename` | 否 | 文件名只允许 `[A-Za-z0-9._-]`；路径逃逸报 `E_RFQ_PATH_INVALID` / `E_RFQ_PATH_NOT_ALLOWED` |
+| `rfq_ingest` | `csv_text` | 二选一 | 整段 CSV 文本，表头见「报价 CSV 表头」 |
+| `rfq_ingest` | `quotes[]` | 二选一 | JSON 报价数组，字段与 CSV 列一致 |
+| `rfq_compare` | `as_of` | 否 | `YYYY-MM-DD`，默认今天（UTC） |
+| `rfq_compare` | `cost_lines[]` | 否 | 成本线假设，CNY 分/件 |
+| `rfq_compare` | `budgets[]` | 否 | 预算假设，CNY 分/该数量 |
+| `rfq_compare` | `fx_rates` | 否 | 汇率覆盖，未知币种键会报 `E_RFQ_CURRENCY` |
+| `rfq_export` | 上述全部 + `filename` | 否 | 文件名只允许 `[A-Za-z0-9._-]`；路径逃逸报 `E_RFQ_PATH_INVALID` / `E_RFQ_PATH_NOT_ALLOWED` |
 
 </details>
 
@@ -233,7 +233,7 @@ node samples/quickstart/run.mjs --check
 <details>
 <summary>报价会存到磁盘吗？</summary>
 
-`rfq.ingest` 只写进程内内存表，进程结束就没了；只有 `rfq.export` 会把**比价结果**写到 `$DSH_HOME/dsh-rfq-compare/exports/`。原始报价 CSV 只读，不会被修改。需要长期留存原始报价，请自己另存。
+`rfq_ingest` 只写进程内内存表，进程结束就没了；只有 `rfq_export` 会把**比价结果**写到 `$DSH_HOME/dsh-rfq-compare/exports/`。原始报价 CSV 只读，不会被修改。需要长期留存原始报价，请自己另存。
 
 </details>
 
@@ -261,11 +261,11 @@ node samples/quickstart/run.mjs --check
 ## 权限与安全边界
 
 - 读：用户指定的报价 CSV / JSON，以及可选的成本线与预算假设（样例 `samples/quickstart/input/quotes.csv`、`samples/quickstart/input/assumptions.json`）；不读其他目录。
-- 写：只在 `rfq.export` 时写 `$DSH_HOME/dsh-rfq-compare/exports/`；`rfq.ingest` 只改进程内内存表，不落盘。
+- 写：只在 `rfq_export` 时写 `$DSH_HOME/dsh-rfq-compare/exports/`；`rfq_ingest` 只改进程内内存表，不落盘。
 - 联网：否。
 - 外部系统：无。不调用汇率接口、不调用模型、不上传报价。
 
-`rfq.ingest`、`rfq.compare` 标 **R0**（只读文件 + 进程内状态）；`rfq.export` 标 **R1**（本地写，只写 `$DSH_HOME/dsh-rfq-compare` 下的 `exports/`）。可用 `DSH_RFQ_COMPARE_HOME` 覆盖本地写根目录（测试用），默认严格等于 `$DSH_HOME/dsh-rfq-compare`。
+`rfq_ingest`、`rfq_compare` 标 **R0**（只读文件 + 进程内状态）；`rfq_export` 标 **R1**（本地写，只写 `$DSH_HOME/dsh-rfq-compare` 下的 `exports/`）。可用 `DSH_RFQ_COMPARE_HOME` 覆盖本地写根目录（测试用），默认严格等于 `$DSH_HOME/dsh-rfq-compare`。
 
 - **输入只读**：原始报价文件不会被改写；要留档请自己另存一份。
 - **单点写入**：唯一的写面是 `exports/`，文件名由 `safeExportPath` 校验，路径逃逸被拒绝。
@@ -278,7 +278,7 @@ node samples/quickstart/run.mjs --check
 - 汇率是占位值；不含运费、关税、税率、付款条件、最小起订量、阶梯价。跨币种结论只用于初筛。
 - 不做单位换算（件/箱/公斤）；同一物料必须用同一计量单位报价，否则比价没有意义。
 - 成本线与预算必须由使用者提供；本包不猜、不从历史数据推断。
-- 报价只存在进程内，重启后需要重新 `rfq.ingest`。
+- 报价只存在进程内，重启后需要重新 `rfq_ingest`。
 - CSV 只做 RFC 4180 引号转义，不做 Excel 公式前缀清洗；不要用 Excel 直接打开来源不明的 CSV。
 - 只在本机读写；不联网、不调用模型、不上传。
 - 仅公开/合成样例；alpha/partial、not counted，不作 GA 或生产可用声明。
@@ -314,7 +314,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-当前版本 `0.1.0` · 36 项测试（`node --test test/*.test.mjs`）。发布门是 `pnpm gate`：先跑元数据与 README 检查（`scripts/lint.mjs`），再跑验收（`scripts/acceptance.mjs`），最后核对 `ACCEPTANCE.csv` 每一行 `pass=true`。
+当前版本 `0.2.0` · 37 项测试（`node --test test/*.test.mjs`）。发布门是 `pnpm gate`：先跑元数据与 README 检查（`scripts/lint.mjs`），再跑验收（`scripts/acceptance.mjs`），最后核对 `ACCEPTANCE.csv` 每一行 `pass=true`。
 
 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow hero + 手写 SVG）：产出 `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` 与 `dsh-rfq-compare-flow-v5-{light,dark}.svg`，可重复执行；本仓没有 benchmark 数据，因此不生成实测条形图。
 
