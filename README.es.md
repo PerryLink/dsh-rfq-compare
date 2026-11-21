@@ -329,7 +329,7 @@ Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `rfq`, `quote`, `procurement`, 
 
 - [dsh-pim-lint](https://github.com/PerryLink/dsh-pim-lint) — comprobaciones de datos maestros de material
 - [dsh-ap-three-way](https://github.com/PerryLink/dsh-ap-three-way) — conciliación a tres bandas factura/pedido/recepción
-- [Pack de compras](../dsh-procurement-pack/README.md) — comparación de RFQ → PIM lint → conciliación a tres bandas
+- Pack de compras (`dsh-procurement-pack`, repositorio hermano) — comparación de RFQ → PIM lint → conciliación a tres bandas
 - [Índice de dominio](https://perrylink.github.io/dsh-plugins/)
 
 ## Familia y agradecimientos

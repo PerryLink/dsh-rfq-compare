@@ -329,7 +329,7 @@ Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `rfq`, `quote`, `procurement`, 
 
 - [dsh-pim-lint](https://github.com/PerryLink/dsh-pim-lint) — सामग्री मास्टर-डेटा जाँच
 - [dsh-ap-three-way](https://github.com/PerryLink/dsh-ap-three-way) — इनवॉइस/PO/GRN तीन-तरफ़ा मिलान
-- [खरीद पैक](../dsh-procurement-pack/README.md) — RFQ तुलना → PIM lint → तीन-तरफ़ा मिलान
+- खरीद पैक (`dsh-procurement-pack`, सहोदर रिपॉज़िटरी) — RFQ तुलना → PIM lint → तीन-तरफ़ा मिलान
 - [डोमेन इंडेक्स](https://perrylink.github.io/dsh-plugins/)
 
 ## परिवार और आभार

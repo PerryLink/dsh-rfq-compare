@@ -329,7 +329,7 @@ Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `rfq`, `quote`, `procurement`,
 
 - [dsh-pim-lint](https://github.com/PerryLink/dsh-pim-lint)（物料主数据检查）
 - [dsh-ap-three-way](https://github.com/PerryLink/dsh-ap-three-way)（发票三单匹配）
-- [采购供应链职能包](../dsh-procurement-pack/README.md)（询价比价 → 物料主数据 → 三单匹配）
+- 采购供应链职能包（同级仓库 `dsh-procurement-pack`）：询价比价 → 物料主数据 → 三单匹配
 - [领域索引](https://perrylink.github.io/dsh-plugins/)
 
 ## 家族与致谢
