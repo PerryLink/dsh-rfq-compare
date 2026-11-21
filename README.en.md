@@ -170,6 +170,11 @@ node samples/quickstart/run.mjs --check
 
 <img src="docs/assets/quickstart.png" width="100%" alt="Real terminal output of the dsh-rfq-compare quickstart command: 12 quotes, 4 materials, all three anomaly classes and the exported CSV row count">
 
+![Real terminal output of the dsh-rfq-compare quickstart command: 12 quotes, 4 materials, all three anomaly classes and the exported CSV row count](docs/assets/dsh-rfq-compare-demo.gif)
+
+*The animated version of the same run.*
+
+
 The sample is synthetic: 3 suppliers × 4 materials = 12 quotes (`DEMO-SUP-*` / `MAT-100*`), deliberately mixed CNY/USD/EUR, with one below-cost line, two over-budget materials and two expired quotes so all three anomaly classes are exercised. `samples/quickstart/expected/result.json` is the real stdout of `node samples/quickstart/run.mjs --json`, not hand-written; the screenshot is the real output of the command above.
 
 ## Acceptance evidence

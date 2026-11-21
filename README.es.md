@@ -170,6 +170,11 @@ node samples/quickstart/run.mjs --check
 
 <img src="docs/assets/quickstart.png" width="100%" alt="Salida real de terminal del comando quickstart de dsh-rfq-compare: 12 cotizaciones, 4 materiales, las tres clases de anomalía y el recuento de filas del CSV exportado">
 
+![Salida real de terminal del comando quickstart de dsh-rfq-compare: 12 cotizaciones, 4 materiales, las tres clases de anomalía y el recuento de filas del CSV exportado](docs/assets/dsh-rfq-compare-demo.gif)
+
+*La versión animada de la misma ejecución.*
+
+
 La muestra es sintética: 3 proveedores × 4 materiales = 12 cotizaciones (`DEMO-SUP-*` / `MAT-100*`), con CNY/USD/EUR mezclados a propósito, una línea por debajo del coste, dos materiales por encima del presupuesto y dos cotizaciones caducadas, de modo que se ejercitan las tres clases de anomalía. `samples/quickstart/expected/result.json` es la salida real de `node samples/quickstart/run.mjs --json`, no está escrito a mano; la captura es la salida real del comando anterior.
 
 ## Evidencia de aceptación

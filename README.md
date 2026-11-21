@@ -170,6 +170,11 @@ node samples/quickstart/run.mjs --check
 
 <img src="docs/assets/quickstart.png" width="100%" alt="dsh-rfq-compare 快速开始命令的真实终端输出：12 条报价、4 个物料、三类异常与导出的 CSV 行数">
 
+![dsh-rfq-compare 快速开始命令的真实终端输出：12 条报价、4 个物料、三类异常与导出的 CSV 行数](docs/assets/dsh-rfq-compare-demo.gif)
+
+*同一段真实运行的动图版本。*
+
+
 样例是 3 家供应商 × 4 个物料、共 12 条报价的合成数据（`DEMO-SUP-*` / `MAT-100*`），故意混用 CNY / USD / EUR，并各留一条低于成本线、超预算、有效期已过的记录，让三类异常都能被真实跑出来。金标 `samples/quickstart/expected/result.json` 由 `node samples/quickstart/run.mjs --json` 真实产生，不是手写；截图就是上面这条命令的真实输出。
 
 ## 验收证据
