@@ -11,6 +11,8 @@
 
 Un plugin de comparación de RFQ para DeepSeek Harness: los importes van en céntimos enteros, el tipo de cambio es un marcador de posición documentado, las anomalías son marcas y no una descalificación automática, y el resultado es un CSV que un comprador puede revisar — sin red, sin llamada al modelo, sin subir nada.
 
+Última verificación: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Instalar](#instalación-en-tres-pasos) · [Configuración](#configuración) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -174,7 +176,6 @@ node samples/quickstart/run.mjs --check
 
 *La versión animada de la misma ejecución.*
 
-
 La muestra es sintética: 3 proveedores × 4 materiales = 12 cotizaciones (`DEMO-SUP-*` / `MAT-100*`), con CNY/USD/EUR mezclados a propósito, una línea por debajo del coste, dos materiales por encima del presupuesto y dos cotizaciones caducadas, de modo que se ejercitan las tres clases de anomalía. `samples/quickstart/expected/result.json` es la salida real de `node samples/quickstart/run.mjs --json`, no está escrito a mano; la captura es la salida real del comando anterior.
 
 ## Evidencia de aceptación
@@ -319,7 +320,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-Versión actual `0.2.0` · 37 pruebas (`node --test test/*.test.mjs`). La puerta de release es `pnpm gate`: primero metadatos y comprobaciones de README (`scripts/lint.mjs`), después aceptación (`scripts/acceptance.mjs`) y por último cada fila de `ACCEPTANCE.csv` debe tener `pass=true`.
+Versión actual `0.2.1` · 37 pruebas (`node --test test/*.test.mjs`). La puerta de release es `pnpm gate`: primero metadatos y comprobaciones de README (`scripts/lint.mjs`), después aceptación (`scripts/acceptance.mjs`) y por último cada fila de `ACCEPTANCE.csv` debe tener `pass=true`.
 
 Las imágenes del README se generan de forma programática con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (hero con Pillow + SVG escrito a mano): escribe `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` y `dsh-rfq-compare-flow-v5-{light,dark}.svg`, y se puede volver a ejecutar; este repo no tiene datos de benchmark, así que no se produce el gráfico de datos medidos.
 

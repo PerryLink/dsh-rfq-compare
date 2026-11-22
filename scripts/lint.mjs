@@ -16,9 +16,9 @@ check(pkg.dsh?.bundle?.patch === './cordis.patch.yml', 'dsh.bundle.patch missing
 check(!pkg.dsh?.client, 'this package must not declare a client bundle')
 check(existsSync('cordis.patch.yml'), 'cordis.patch.yml is missing')
 check(pkg.engines?.node === '>=24.9.0 <25', 'engines.node must be >=24.9.0 <25')
-check(pkg.engines?.dsh === '>=0.2.1-rc.3 <0.4.0', 'engines.dsh must be >=0.2.1-rc.3 <0.4.0')
+check(pkg.engines?.dsh === '>=0.2.1-rc.3 <0.4.0 || >=0.2.3-0 <0.3.0-0', 'engines.dsh must be >=0.2.1-rc.3 <0.4.0')
 check(!pkg.dependencies || Object.keys(pkg.dependencies).length === 0, 'runtime dependencies must stay empty')
-check(pkg.peerDependencies?.['@deepseek-ai/dsh-tools'] === '>=0.2.1-rc.3 <0.4.0', 'dsh-tools peer range is missing')
+check(pkg.peerDependencies?.['@deepseek-ai/dsh-tools'] === '>=0.2.1-rc.3 <0.4.0 || >=0.2.3-0 <0.3.0-0', 'dsh-tools peer range is missing')
 check(pkg.devDependencies?.typescript === '7.0.2', 'typescript must stay pinned at 7.0.2')
 
 const demo = pkg.dsh?.demo

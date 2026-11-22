@@ -11,6 +11,8 @@
 
 An RFQ comparison plugin for DeepSeek Harness: amounts stay in integer cents, FX rates are a documented placeholder, anomalies are flags rather than automatic disqualification, and the result is a CSV a buyer can review — no network, no model call, no upload.
 
+Last verified on DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Install](#three-step-setup) · [Configuration](#configuration) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -174,7 +176,6 @@ node samples/quickstart/run.mjs --check
 
 *The animated version of the same run.*
 
-
 The sample is synthetic: 3 suppliers × 4 materials = 12 quotes (`DEMO-SUP-*` / `MAT-100*`), deliberately mixed CNY/USD/EUR, with one below-cost line, two over-budget materials and two expired quotes so all three anomaly classes are exercised. `samples/quickstart/expected/result.json` is the real stdout of `node samples/quickstart/run.mjs --json`, not hand-written; the screenshot is the real output of the command above.
 
 ## Acceptance evidence
@@ -319,7 +320,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-Current version `0.2.0` · 37 tests (`node --test test/*.test.mjs`). The release gate is `pnpm gate`: metadata and README checks first (`scripts/lint.mjs`), then acceptance (`scripts/acceptance.mjs`), then every `ACCEPTANCE.csv` row must have `pass=true`.
+Current version `0.2.1` · 37 tests (`node --test test/*.test.mjs`). The release gate is `pnpm gate`: metadata and README checks first (`scripts/lint.mjs`), then acceptance (`scripts/acceptance.mjs`), then every `ACCEPTANCE.csv` row must have `pass=true`.
 
 The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow hero + hand-written SVG): it writes `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` and `dsh-rfq-compare-flow-v5-{light,dark}.svg`, and is safe to re-run; this repo has no benchmark data, so no measured-data bar chart is produced.
 

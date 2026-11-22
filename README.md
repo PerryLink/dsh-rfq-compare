@@ -11,6 +11,8 @@
 
 面向 DeepSeek Harness 的询价比价插件：金额全程整数分、汇率是写死的占位值、异常只做标记不自动淘汰，最后导出一张采购能复核的 CSV——不联网、不调用模型、不上传报价。
 
+最近一次核验：DeepSeek Harness `dsh-v0.2.3-alpha.1`（2026-11-22）。
+
 [安装](#三步上手) · [配置](#配置) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -174,7 +176,6 @@ node samples/quickstart/run.mjs --check
 
 *同一段真实运行的动图版本。*
 
-
 样例是 3 家供应商 × 4 个物料、共 12 条报价的合成数据（`DEMO-SUP-*` / `MAT-100*`），故意混用 CNY / USD / EUR，并各留一条低于成本线、超预算、有效期已过的记录，让三类异常都能被真实跑出来。金标 `samples/quickstart/expected/result.json` 由 `node samples/quickstart/run.mjs --json` 真实产生，不是手写；截图就是上面这条命令的真实输出。
 
 ## 验收证据
@@ -319,7 +320,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-当前版本 `0.2.0` · 37 项测试（`node --test test/*.test.mjs`）。发布门是 `pnpm gate`：先跑元数据与 README 检查（`scripts/lint.mjs`），再跑验收（`scripts/acceptance.mjs`），最后核对 `ACCEPTANCE.csv` 每一行 `pass=true`。
+当前版本 `0.2.1` · 37 项测试（`node --test test/*.test.mjs`）。发布门是 `pnpm gate`：先跑元数据与 README 检查（`scripts/lint.mjs`），再跑验收（`scripts/acceptance.mjs`），最后核对 `ACCEPTANCE.csv` 每一行 `pass=true`。
 
 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow hero + 手写 SVG）：产出 `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` 与 `dsh-rfq-compare-flow-v5-{light,dark}.svg`，可重复执行；本仓没有 benchmark 数据，因此不生成实测条形图。
 

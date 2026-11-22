@@ -11,6 +11,8 @@
 
 DeepSeek Harness के लिए RFQ तुलना प्लगइन: राशि हमेशा पूर्णांक सेंट में, विनिमय दर एक दस्तावेज़ीकृत प्लेसहोल्डर, विसंगतियाँ केवल चिह्न हैं — स्वतः बहिष्कार नहीं — और अंत में एक CSV जिसे खरीदार जाँच सके। कोई नेटवर्क नहीं, कोई मॉडल कॉल नहीं, कोई अपलोड नहीं।
 
+अंतिम सत्यापन: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [स्थापना](#तीन-चरणों-में-शुरुआत) · [कॉन्फ़िगरेशन](#कॉन्फ़िगरेशन) · [सामान्य प्रश्न](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -174,7 +176,6 @@ node samples/quickstart/run.mjs --check
 
 *उसी असली रन का एनिमेटेड संस्करण।*
 
-
 सैंपल सिंथेटिक है: 3 आपूर्तिकर्ता × 4 सामग्री = 12 कोटेशन (`DEMO-SUP-*` / `MAT-100*`), जानबूझकर CNY/USD/EUR मिले हुए, एक पंक्ति लागत से नीचे, दो सामग्री बजट से ऊपर और दो कोटेशन अवधि-समाप्त, ताकि तीनों विसंगति श्रेणियाँ वास्तव में चलें। `samples/quickstart/expected/result.json` `node samples/quickstart/run.mjs --json` का वास्तविक आउटपुट है, हाथ से लिखा नहीं; स्क्रीनशॉट ऊपर के कमांड का वास्तविक आउटपुट है।
 
 ## स्वीकृति साक्ष्य
@@ -319,7 +320,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-वर्तमान संस्करण `0.2.0` · 37 परीक्षण (`node --test test/*.test.mjs`)। रिलीज़ गेट `pnpm gate` है: पहले मेटाडेटा और README जाँच (`scripts/lint.mjs`), फिर स्वीकृति (`scripts/acceptance.mjs`), और अंत में `ACCEPTANCE.csv` की हर पंक्ति में `pass=true` होना चाहिए।
+वर्तमान संस्करण `0.2.1` · 37 परीक्षण (`node --test test/*.test.mjs`)। रिलीज़ गेट `pnpm gate` है: पहले मेटाडेटा और README जाँच (`scripts/lint.mjs`), फिर स्वीकृति (`scripts/acceptance.mjs`), और अंत में `ACCEPTANCE.csv` की हर पंक्ति में `pass=true` होना चाहिए।
 
 README की तस्वीरें [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow हीरो + हस्तलिखित SVG) से प्रोग्रामेटिक रूप से बनती हैं: `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` और `dsh-rfq-compare-flow-v5-{light,dark}.svg` लिखता है और दोबारा चलाया जा सकता है; इस रेपो में benchmark डेटा नहीं है, इसलिए मापे गए डेटा का चार्ट नहीं बनता।
 
