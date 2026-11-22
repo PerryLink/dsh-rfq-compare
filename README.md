@@ -320,7 +320,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-当前版本 `0.2.1` · 37 项测试（`node --test test/*.test.mjs`）。发布门是 `pnpm gate`：先跑元数据与 README 检查（`scripts/lint.mjs`），再跑验收（`scripts/acceptance.mjs`），最后核对 `ACCEPTANCE.csv` 每一行 `pass=true`。
+当前版本 `0.2.2` · 37 项测试（`node --test test/*.test.mjs`）。发布门是 `pnpm gate`：先跑元数据与 README 检查（`scripts/lint.mjs`），再跑验收（`scripts/acceptance.mjs`），最后核对 `ACCEPTANCE.csv` 每一行 `pass=true`。
 
 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow hero + 手写 SVG）：产出 `dsh-rfq-compare-hero-{zh,en}-{light,dark}.webp` 与 `dsh-rfq-compare-flow-v5-{light,dark}.svg`，可重复执行；本仓没有 benchmark 数据，因此不生成实测条形图。
 

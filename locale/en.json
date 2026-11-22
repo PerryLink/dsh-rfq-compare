@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Rfq compare",
+    "description": "Put several suppliers' quotes for the same materials into one table: who is cheapest, by how much, how fast, and which quote is below cost, over budget, or already expired."
+  }
+}

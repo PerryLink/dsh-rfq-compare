@@ -1,6 +1,6 @@
 {
   "name": "dsh-rfq-compare",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Ingest supplier quotes, compare them per material, flag below-cost / over-budget / expired quotes and export a comparison CSV; amounts stay in integer cents.",
   "type": "module",
   "main": "./lib/plugin/index.js",
@@ -9,7 +9,8 @@
     ".": {
       "types": "./lib/plugin/index.d.ts",
       "default": "./lib/plugin/index.js"
-    }
+    },
+    "./locale/*.json": "./locale/*.json"
   },
   "files": [
     "lib",
@@ -25,7 +26,9 @@
     "THIRD-PARTY-NOTICES",
     "samples",
     "docs/assets",
-    "screenshots.json"
+    "screenshots.json",
+    "locale/*.json",
+    "icon.svg"
   ],
   "dsh": {
     "bundle": {
@@ -99,5 +102,10 @@
     "@deepseek-ai/dsh-tools": {
       "optional": true
     }
+  },
+  "icon": "icon.svg",
+  "author": {
+    "name": "PerryLink",
+    "url": "https://github.com/PerryLink"
   }
 }
